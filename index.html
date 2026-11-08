@@ -106,8 +106,18 @@ ul.sum{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max
 .nextnav .tt{font-weight:700;font-size:19px;line-height:1.3;color:var(--lobe)}
 .nextnav .ts{font-size:13px;color:var(--muted);line-height:1.4}
 .tabpanel{display:flex;flex-direction:column;gap:56px}
+body{word-break:keep-all;overflow-wrap:break-word}
+section>p,.fig>p{margin:0}
+section{gap:12px}
 .tabpanel[hidden],[hidden]{display:none!important}
-#feedSel label,.btns button{font-family:var(--sans)}
+#feedSel label,.btns button,#ionoTime label{font-family:var(--sans)}
+.ctl .sub,.clabel .sub{font-size:12px;color:var(--muted);font-weight:400}
+.clabel output{font-family:var(--mono);font-weight:600;color:var(--ink)}
+.bands input:disabled+label{opacity:.35;cursor:not-allowed;text-decoration:line-through}
+details.adv{margin-top:6px}
+details.adv summary{font-size:12px;color:var(--muted);cursor:pointer;width:max-content}
+details.adv summary:hover{color:var(--ink)}
+details.adv input[type=range]{margin-top:6px}
 .clabel{font-size:13px;color:var(--muted)}
 .azgrid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:20px;align-items:center}
 .azgrid svg{max-width:420px;margin:0 auto}
@@ -151,7 +161,8 @@ ul.sum{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max
 <section>
   <div class="eyebrow">높이별 패턴</div>
   <h2>0.25λ, 0.5λ, 1λ</h2>
-  <p>대표적인 세 높이의 패턴입니다. 수평 다이폴을 정면(방위 직각)에서 본 고각 패턴이고, 대지는 완전 도체로 가정했습니다. 로브 크기는 서로 같은 기준이라, 낮은 안테나일수록 로브 자체가 작아지는 것도 보입니다.</p>
+  <p>대표적인 세 높이의 패턴입니다. 수평 다이폴을 정면(방위 직각)에서 본 고각 패턴이고, 대지는 완전 도체로 가정했습니다.</p>
+  <p>로브 크기는 서로 같은 기준이라, 낮은 안테나일수록 로브 자체가 작아지는 것도 보입니다.</p>
   <div class="fig"><div class="trio" id="trio"></div></div>
   <p class="note">1λ에서는 바로 위(90°)와 30°가 널이 되고, 약 14.5°와 48.6°에 로브가 섭니다. 높이를 더 올리면 로브와 널의 개수가 계속 늘어납니다.</p>
 </section>
@@ -159,7 +170,8 @@ ul.sum{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max
 <section>
   <div class="eyebrow">원리</div>
   <h2>직접파와 반사파의 합</h2>
-  <p>땅에 반사된 파는 안테나 바로 아래 같은 깊이에 있는 <b>거울상 안테나</b>에서 나온 것처럼 행동합니다. 두 파의 경로차는 <code>2h·sin θ</code>이고, 수평편파는 반사 때 위상이 180° 뒤집힙니다. 그래서 경로차가 반 파장의 홀수 배일 때 보강되고, 정수 배 파장일 때 상쇄됩니다.</p>
+  <p>땅에 반사된 파는 안테나 바로 아래 같은 깊이에 있는 <b>거울상 안테나</b>에서 나온 것처럼 행동합니다.</p>
+  <p>두 파의 경로차는 <code>2h·sin θ</code>이고, 수평편파는 반사 때 위상이 180° 뒤집힙니다. 그래서 경로차가 반 파장의 홀수 배일 때 보강되고, 정수 배 파장일 때 상쇄됩니다.</p>
   <div class="fig">
     <div class="controls">
       <div class="ctl"><label for="pH">안테나 높이</label><output id="pHo"></output><input type="range" id="pH" min="0.1" max="1.5" step="0.01" value="0.5"></div>
@@ -194,17 +206,23 @@ ul.sum{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max
   <div class="eyebrow">전리층 반사</div>
   <h2>1홉 거리와 NVIS 조건</h2>
   <p>전리층 F2층을 지상 약 300 km에 있는 반사면 하나로 보면, 발사각만으로 전파가 다시 땅에 닿는 거리를 계산할 수 있습니다. 각도가 낮을수록 멀리 떨어집니다.</p>
-  <p>되돌아오느냐는 주파수가 정합니다. 수직으로 쏜 전파가 되돌아오는 최고 주파수가 <b>foF2</b>(임계주파수)이고, 비스듬히 들어갈수록 더 높은 주파수까지 반사됩니다. 이 한계가 <b>MUF</b>입니다. 주파수가 foF2보다 낮으면 수직으로 쏴도 돌아오므로 NVIS가 됩니다. 높으면 가파른 전파는 뚫고 나가고, 그 안쪽에는 신호가 닿지 않는 <b>스킵존</b>이 생깁니다.</p>
+  <p>되돌아오느냐는 주파수가 정합니다. 수직으로 쏜 전파가 되돌아오는 최고 주파수가 <b>foF2</b>(임계주파수)이고, 비스듬히 들어갈수록 더 높은 주파수까지 반사됩니다. 이 한계가 <b>MUF</b>입니다.</p>
+  <p>주파수가 foF2보다 낮으면 수직으로 쏴도 돌아오므로 NVIS가 됩니다. 높으면 가파른 전파는 뚫고 나가고, 그 안쪽에는 신호가 닿지 않는 <b>스킵존</b>이 생깁니다.</p>
   <div class="fig" style="display:flex;flex-direction:column;gap:14px">
     <div class="controls">
-      <div class="ctl"><label for="iB">발사각</label><output id="iBo"></output><input type="range" id="iB" min="3" max="90" step="1" value="30"></div>
-      <div class="ctl"><label for="iF">운용 주파수</label><output id="iFo"></output><input type="range" id="iF" min="1.8" max="30" step="0.1" value="7.1"></div>
-      <div class="ctl"><label for="iO">foF2 (임계주파수)</label><output id="iOo"></output><input type="range" id="iO" min="2" max="14" step="0.1" value="8"></div>
+      <div class="ctl" style="flex-basis:100%"><span class="clabel">1. 밴드 <span class="sub" id="iFo"></span></span><div class="bands" id="ionoBands"></div><input type="hidden" id="iF" value="7.1"></div>
+      <div class="ctl" style="flex-basis:100%"><span class="clabel">2. 시간대 <span class="sub">전리층 상태 · foF2 <output id="iOo"></output></span></span>
+        <div class="bands" id="ionoTime">
+          <input type="radio" name="itime" id="it9" value="9" checked><label for="it9">낮</label>
+          <input type="radio" name="itime" id="it6" value="6"><label for="it6">해 질 녘</label>
+          <input type="radio" name="itime" id="it4" value="4"><label for="it4">밤</label>
+        </div>
+        <details class="adv"><summary>foF2 직접 조절</summary><input type="range" id="iO" min="2" max="14" step="0.1" value="9" aria-label="foF2 직접 조절"></details>
+      </div>
+      <div class="ctl" style="flex-basis:100%"><label for="iB">3. 발사각</label><output id="iBo"></output><input type="range" id="iB" min="3" max="90" step="1" value="30"></div>
     </div>
     <div class="btns">
-      <button type="button" id="pDay">낮 (foF2 9 MHz)</button>
-      <button type="button" id="pNight">밤 (foF2 4 MHz)</button>
-      <button type="button" id="pSync">위 계산의 밴드·주 로브 가져오기</button>
+      <button type="button" id="pSync">위 계산기의 밴드·높이로 맞추기</button>
     </div>
     <svg id="iono" viewBox="0 0 700 250" role="img" aria-label="지구 곡률과 F2층 높이를 실제 비율로 그린 1홉 경로"></svg>
     <div class="stats">
@@ -220,13 +238,15 @@ ul.sum{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max
 <section>
   <div class="eyebrow">NVIS</div>
   <h2>낮은 안테나가 더 나을 때</h2>
-  <p>0.25λ 이하에서는 에너지가 거의 수직으로 올라가 전리층에서 바로 아래로 돌아옵니다. 반경 수백 km를 스킵존 없이 덮기 때문에 비상통신과 지역 HF망이 이 방식을 씁니다. 반대로 1λ 높이의 안테나는 30° 근처가 널이라, 그 각도에 해당하는 거리의 국내 교신이 오히려 약해질 수 있습니다.</p>
+  <p>0.25λ 이하에서는 에너지가 거의 수직으로 올라가 전리층에서 바로 아래로 돌아옵니다. 반경 수백 km를 스킵존 없이 덮기 때문에 비상통신과 지역 HF망이 이 방식을 씁니다.</p>
+  <p>반대로 1λ 높이의 안테나는 30° 근처가 널이라, 그 각도에 해당하는 거리의 국내 교신이 오히려 약해질 수 있습니다.</p>
 </section>
 
 <section>
   <div class="eyebrow">적용 범위</div>
   <h2>다른 와이어 안테나에도 적용될까</h2>
-  <p>실제 고각 패턴은 <b>안테나 자체의 패턴 × 대지 반사 효과</b>입니다. 높이가 바꾸는 건 대지 반사 쪽이라, 수평으로 건 와이어 안테나라면 이 페이지의 높이 효과가 그대로 통합니다. 다만 안테나 자체의 패턴, 즉 어느 방향으로 강한지와 급전 방식은 안테나마다 다릅니다.</p>
+  <p>실제 고각 패턴은 <b>안테나 자체의 패턴 × 대지 반사 효과</b>입니다.</p>
+  <p>높이가 바꾸는 건 대지 반사 쪽이라, 수평으로 건 와이어 안테나라면 이 페이지의 높이 효과가 그대로 통합니다. 다만 안테나 자체의 패턴, 즉 어느 방향으로 강한지와 급전 방식은 안테나마다 다릅니다.</p>
   <div class="fig" style="overflow-x:auto">
     <table class="wtbl">
       <thead><tr><th>안테나</th><th>높이 효과</th><th>주의할 점</th></tr></thead>
@@ -239,13 +259,14 @@ ul.sum{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max
       </tbody>
     </table>
   </div>
-  <p class="note">이 페이지는 안테나를 <b>어떻게 거느냐</b>(높이)를 다룹니다. 길이와 공진, 급전점 임피던스와 정합, 방위 패턴, 급전선의 공통모드 전류처럼 <b>무엇을 거느냐</b>에 해당하는 내용은 다루지 않습니다.</p>
+  <p class="note">높이 탭은 안테나를 <b>어떻게 거느냐</b>(높이)를 다룹니다. 와이어 길이와 급전 방식, 방위 패턴은 <a href="#length" class="golen">길이 · 방위 탭</a>에서 다루고, 임피던스 정합과 급전선의 공통모드 전류는 다루지 않습니다.</p>
 </section>
 
 <section>
   <div class="eyebrow">수직 안테나</div>
   <h2>수평 다이폴과 λ/4 수직</h2>
-  <p>수직 안테나는 높이 없이도 낮은 각도로 방사합니다. 다만 그 장점은 대지 손실에 크게 좌우되므로 레이디얼이 중요합니다. 점선은 실제 대지에서 낮은 각도가 깎이는 모습을 보여주는 개념도입니다.</p>
+  <p>수직 안테나는 높이 없이도 낮은 각도로 방사합니다. 다만 그 장점은 대지 손실에 크게 좌우되므로 레이디얼이 중요합니다.</p>
+  <p>점선은 실제 대지에서 낮은 각도가 깎이는 모습을 보여주는 개념도입니다.</p>
   <div class="fig"><div class="trio" id="vert" style="grid-template-columns:repeat(2,minmax(0,1fr))"></div></div>
 </section>
 
@@ -268,7 +289,8 @@ ul.sum{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max
 <section>
   <div class="eyebrow">방위 패턴</div>
   <h2>같은 공진, 다른 방향</h2>
-  <p>공진해서 SWR이 좋아도 와이어 길이가 다르면 전파가 나가는 방향이 달라집니다. 방향을 정하는 건 와이어 위 전류의 <b>크기와 위상</b>입니다. 전류는 반 파장마다 방향이 뒤집히고, 같은 위상의 구간끼리는 정면에서 더해지고 반대 위상의 구간끼리는 정면에서 상쇄됩니다.</p>
+  <p>공진해서 SWR이 좋아도 와이어 길이가 다르면 전파가 나가는 방향이 달라집니다.</p>
+  <p>방향을 정하는 건 와이어 위 전류의 <b>크기와 위상</b>입니다. 전류는 반 파장마다 방향이 뒤집히고, 같은 위상의 구간끼리는 정면에서 더해지고 반대 위상의 구간끼리는 정면에서 상쇄됩니다.</p>
 </section>
 
 <section>
@@ -282,7 +304,10 @@ ul.sum{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max
           <input type="radio" name="feed" id="fdE" value="end"><label for="fdE">끝 급전 (EFHW)</label>
         </div>
       </div>
-      <div class="ctl"><label for="wL">와이어 길이</label><output id="wLo"></output><input type="range" id="wL" min="0.5" max="3" step="0.25" value="1"></div>
+      <div class="ctl" style="flex-basis:100%"><span class="clabel">와이어 길이 <output id="wLo"></output> <span class="sub" id="wLex"></span></span>
+        <div class="bands" id="lenSel"></div>
+        <details class="adv"><summary>길이 직접 조절</summary><input type="range" id="wL" min="0.5" max="3" step="0.25" value="1" aria-label="와이어 길이 직접 조절"></details>
+      </div>
       <div class="ctl"><label for="wE">보는 고각</label><output id="wEo"></output><input type="range" id="wE" min="0" max="60" step="1" value="15"></div>
       <div class="ctl"><label for="wT">진행파 성분 (방사 감쇠)</label><output id="wTo"></output><input type="range" id="wT" min="0" max="50" step="5" value="0"></div>
     </div>
@@ -305,7 +330,8 @@ ul.sum{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max
       </div>
     </div>
     <p class="note">방위 패턴은 위에서 내려다본 그림으로, 선택한 고각에서 자른 단면입니다. 대지 위에서는 고각 0°의 신호가 0이라 기본값을 15°로 두었습니다. 그림 크기는 단면마다 가장 센 방향을 기준으로 맞췄습니다.</p>
-    <p class="note"><b>진행파 성분</b>: 0%는 끝에서 전부 반사되는 이상적인 정재파입니다. 실제 와이어는 지나가며 에너지를 방사하므로 돌아오는 파가 약해집니다. 값을 올리면 전류가 0까지 떨어지지 않고, 먼 끝 쪽 로브가 커지며, 널이 조금 메워집니다. 실제 값은 와이어 길이, 높이, 주변 환경에 따라 다르며 대략 10~30% 범위를 생각하면 됩니다. 실제 EFHW에서 정면 널을 더 크게 메우는 건 동축 외피와 카운터포이즈의 방사인데, 이 모델에는 들어 있지 않습니다.</p>
+    <p class="note"><b>진행파 성분</b>: 0%는 끝에서 전부 반사되는 이상적인 정재파입니다. 실제 와이어는 지나가며 에너지를 방사하므로 돌아오는 파가 약해집니다. 값을 올리면 전류가 0까지 떨어지지 않고, 먼 끝 쪽 로브가 커지며, 널이 조금 메워집니다. 실제 값은 와이어 길이, 높이, 주변 환경에 따라 다르며 대략 10~30% 범위를 생각하면 됩니다.</p>
+    <p class="note">실제 EFHW에서 정면 널을 더 크게 메우는 건 동축 외피와 카운터포이즈의 방사인데, 이 모델에는 들어 있지 않습니다.</p>
   </div>
 </section>
 
@@ -313,7 +339,8 @@ ul.sum{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max
   <div class="eyebrow">급전 방식</div>
   <h2>같은 1λ, 다른 급전</h2>
   <p><b>중앙 급전 1λ</b>는 양쪽 다리가 각각 반 파장이라 두 다리의 전류가 같은 위상입니다. 그래서 로브가 갈라지지 않고 정면이 더 날카로워집니다(반파장 대비 약 +1.7 dB). 대신 급전점이 전류 최소점이라 임피던스가 수천 Ω으로 높습니다.</p>
-  <p><b>끝 급전 1λ</b>는 반 파장 구간 두 개가 반대 위상입니다. 정면에서는 서로 지워져 널이 되고, 와이어 축에서 약 54° 기울어진 방향으로 로브 4개가 섭니다. 40m용 EFHW를 20m에서 쓰는 경우가 바로 이것입니다. 실제로는 진행파 성분과 동축 외피 방사 때문에 널이 완전히 파이지 않고, 먼 끝 쪽 로브가 조금 더 커집니다.</p>
+  <p><b>끝 급전 1λ</b>는 반 파장 구간 두 개가 반대 위상입니다. 정면에서는 서로 지워져 널이 되고, 와이어 축에서 약 54° 기울어진 방향으로 로브 4개가 섭니다. 40m용 EFHW를 20m에서 쓰는 경우가 바로 이것입니다.</p>
+  <p>실제로는 진행파 성분과 동축 외피 방사 때문에 널이 완전히 파이지 않고, 먼 끝 쪽 로브가 조금 더 커집니다.</p>
   <div class="fig">
     <div class="smgrid" id="smGrid"></div>
   </div>
@@ -323,7 +350,8 @@ ul.sum{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max
 <section>
   <div class="eyebrow">입체</div>
   <h2>입체로 보기</h2>
-  <p>실제 패턴은 길이가 만드는 모양에 높이가 만드는 대지 반사가 곱해진 것입니다. 끌어서 돌려 보세요. 긴 와이어의 로브는 와이어 축을 감싸는 원뿔 모양이라, 평면 그림의 로브 여러 개가 사실은 원뿔 하나의 단면이라는 것도 보입니다.</p>
+  <p>실제 패턴은 길이가 만드는 모양에 높이가 만드는 대지 반사가 곱해진 것입니다. 끌어서 돌려 보세요.</p>
+  <p>긴 와이어의 로브는 와이어 축을 감싸는 원뿔 모양이라, 평면 그림의 로브 여러 개가 사실은 원뿔 하나의 단면이라는 것도 보입니다.</p>
   <div class="fig" style="display:flex;flex-direction:column;gap:14px">
     <div class="controls">
       <div class="ctl"><label for="g3H">지상고</label><output id="g3Ho"></output><input type="range" id="g3H" min="0.1" max="2" step="0.05" value="0.5"></div>
@@ -515,7 +543,7 @@ const vert=document.getElementById('vert');
   }
   function draw(){
     const b=+iB.value,f=+iF.value,fo=+iO.value;
-    document.getElementById('iBo').textContent=b+'°';document.getElementById('iFo').textContent=f.toFixed(1)+' MHz';document.getElementById('iOo').textContent=fo.toFixed(1)+' MHz';
+    document.getElementById('iBo').textContent=b+'°';document.getElementById('iFo').textContent=f.toFixed(2)+' MHz';document.getElementById('iOo').textContent=fo.toFixed(1)+' MHz';
     svg.innerHTML='';
     E('circle',{cx,cy,r:Rp+hp,class:'layerband'},svg);E('circle',{cx,cy,r:Rp+hp,class:'layer'},svg);
     E('circle',{cx,cy,r:Rp,class:'earth'},svg);
@@ -539,10 +567,15 @@ const vert=document.getElementById('vert');
     const r=document.getElementById('hR');r.textContent=ok?'되돌아옴':'뚫고 나감';r.className=ok?'ok':'bad';
     document.getElementById('hS').textContent=f<=fo?'없음 · NVIS 가능':bmax<0?'전 각도 통과':'0 ~ '+Math.round(2*RE*alpha(Math.max(bmax,0.01))).toLocaleString()+' km';
   }
-  [iB,iF,iO].forEach(x=>x.addEventListener('input',draw));
-  document.getElementById('pDay').onclick=()=>{iO.value=9;draw()};
-  document.getElementById('pNight').onclick=()=>{iO.value=4;draw()};
-  document.getElementById('pSync').onclick=()=>{const f=BANDS[sel][1],H=(+mH.value)/(299.79/f);iF.value=f;iB.value=Math.max(3,Math.round(mainAngle(H)));draw()};
+  const IB=[['160m',1.85],['80m',3.55],['60m',5.35],['40m',7.1],['30m',10.12],['20m',14.2],['17m',18.12],['15m',21.2],['12m',24.94],['10m',28.5]];
+  const ibEl=document.getElementById('ionoBands');
+  IB.forEach(([n,f],i)=>{const inp=document.createElement('input');inp.type='radio';inp.name='iband';inp.id='ib'+i;inp.value=f;inp.checked=n==='40m';
+    inp.addEventListener('change',()=>{iF.value=f;draw()});const l=document.createElement('label');l.htmlFor=inp.id;l.textContent=n;ibEl.append(inp,l)});
+  document.querySelectorAll('input[name=itime]').forEach(r=>r.addEventListener('change',()=>{iO.value=r.value;draw()}));
+  iO.addEventListener('input',()=>{document.querySelectorAll('input[name=itime]').forEach(r=>r.checked=Math.abs(+r.value-+iO.value)<0.05);draw()});
+  iB.addEventListener('input',draw);
+  document.getElementById('pSync').onclick=()=>{const [n,f]=BANDS[sel],H=(+mH.value)/(299.79/f),k=IB.findIndex(b=>b[0]===n);
+    if(k>=0)document.getElementById('ib'+k).checked=true;iF.value=f;iB.value=Math.max(3,Math.round(mainAngle(H)));draw()};
   draw();
 })();
 
@@ -651,7 +684,9 @@ const vert=document.getElementById('vert');
   }
 
   function updateMain(){
-    document.getElementById('wLo').textContent=st.L+' λ';document.getElementById('wEo').textContent=st.el+'°';
+    document.getElementById('wLo').textContent=st.L+' λ';
+    LENS.forEach((v,i)=>{document.getElementById('wl'+i).checked=Math.abs(v-st.L)<1e-9});
+    document.getElementById('wLex').textContent='· 20m 밴드(14.2 MHz)라면 와이어 약 '+(st.L*299.79/14.2).toFixed(1)+' m';document.getElementById('wEo').textContent=st.el+'°';
     const P=build(st.L,st.feed,st.tw);drawCurrent();
     const r=polar(document.getElementById('azSvg'),P,st.el,{size:380,grid:true,feed:st.feed});
     let bi=0;for(let a=0;a<=180;a++)if(r[a]>r[bi])bi=a;
@@ -730,8 +765,14 @@ const vert=document.getElementById('vert');
 
   /* 컨트롤 */
   const wL=document.getElementById('wL'),wE=document.getElementById('wE');
+  const LENS=[0.5,1,1.25,1.5,2,3],lenEl=document.getElementById('lenSel');
+  LENS.forEach((v,i)=>{const inp=document.createElement('input');inp.type='radio';inp.name='wlen';inp.id='wl'+i;inp.value=v;
+    inp.addEventListener('change',()=>{st.L=v;wL.value=v;updateMain()});const l=document.createElement('label');l.htmlFor=inp.id;l.textContent=v+'λ';
+    if(v===1.25)l.title='중앙 급전에서 정면 지향성이 가장 큰 길이';lenEl.append(inp,l)});
   function setFeed(f){st.feed=f;document.getElementById(f==='end'?'fdE':'fdC').checked=true;
-    wL.step=f==='end'?0.5:0.25;if(f==='end'){st.L=Math.max(0.5,Math.round(st.L*2)/2);wL.value=st.L}}
+    wL.step=f==='end'?0.5:0.25;if(f==='end'){st.L=Math.max(0.5,Math.round(st.L*2)/2);wL.value=st.L}
+    LENS.forEach((v,i)=>{const d=f==='end'&&Math.abs(v*2-Math.round(v*2))>1e-9;const el=document.getElementById('wl'+i);el.disabled=d;
+      el.nextSibling.title=d?'끝 급전(EFHW)은 반파장 배수에서만 공진합니다':(v===1.25?'중앙 급전에서 정면 지향성이 가장 큰 길이':'')})}
   document.querySelectorAll('input[name=feed]').forEach(i=>i.addEventListener('change',()=>{setFeed(i.value);updateMain()}));
   wL.addEventListener('input',()=>{st.L=+wL.value;updateMain()});
   wE.addEventListener('input',()=>{st.el=+wE.value;updateMain()});
