@@ -172,6 +172,8 @@ details.adv input[type=range]{margin-top:6px}
 .gl h3{margin:0;font-size:16px}
 .gl p{margin:0;max-width:none}
 .gshort{font-size:14px}
+.gen{font-size:12.5px;color:var(--muted);font-style:italic;margin-top:-4px!important;letter-spacing:.01em}
+.tpop-en{font-size:12px;color:var(--muted);font-style:italic;margin-top:-4px}
 .gex{font-size:13px;color:var(--muted)}
 .gnote{font-size:12px;color:var(--muted);border-top:1px dashed var(--grid);padding-top:6px}
 .formula{font-family:var(--mono);font-size:13.5px;background:var(--paper);border-radius:4px;padding:8px 10px;overflow-x:auto;line-height:1.7;word-break:normal}
@@ -456,49 +458,59 @@ details.adv input[type=range]{margin-top:6px}
   <div class="glist">
     <div class="gl" id="g-lambda">
       <h3>파장 λ</h3>
+      <p class="gen" lang="en">Wavelength</p>
       <p class="gshort">전파가 한 번 진동하는 동안 나아가는 거리입니다. 주파수가 높을수록 짧아집니다.</p>
       <div class="formula">λ (m) = 299.8 ÷ f (MHz)</div>
       <p class="gex">예: 14.2 MHz → 약 21.1 m, 7.1 MHz → 약 42.2 m</p>
     </div>
     <div class="gl" id="g-hl">
       <h3>파장 대비 높이 h/λ</h3>
+      <p class="gen" lang="en">Height in wavelengths</p>
       <p class="gshort">안테나 지상고를 미터가 아니라 파장 단위로 나타낸 값입니다. 같은 10 m라도 밴드마다 h/λ가 달라 패턴이 달라집니다.</p>
       <div class="formula">h/λ = h (m) × f (MHz) ÷ 299.8</div>
       <p class="gex">예: 10.5 m 높이 · 14.2 MHz → 약 0.50λ</p>
     </div>
     <div class="gl" id="g-elev">
       <h3>고각 θ</h3>
+      <p class="gen" lang="en">Elevation angle · Take-off angle</p>
       <p class="gshort">수평선에서 위쪽으로 잰 각도입니다. 0°는 수평선, 90°는 바로 위입니다.</p>
     </div>
     <div class="gl" id="g-azim">
       <h3>방위각 φ</h3>
+      <p class="gen" lang="en">Azimuth</p>
       <p class="gshort">위에서 내려다봤을 때 수평으로 잰 각도입니다. 이 페이지는 와이어 축을 0°, 와이어 정면을 90°로 둡니다.</p>
     </div>
     <div class="gl" id="g-lobe">
       <h3>로브</h3>
+      <p class="gen" lang="en">Lobe · Main lobe</p>
       <p class="gshort">방사 패턴에서 전파가 강하게 나가는 방향의 덩어리입니다. 가장 큰 것을 주 로브라고 합니다.</p>
     </div>
     <div class="gl" id="g-null">
       <h3>널</h3>
+      <p class="gen" lang="en">Null</p>
       <p class="gshort">방사가 거의 0이 되는 방향입니다. 여러 경로의 전파가 서로 지워질 때 생깁니다.</p>
     </div>
     <div class="gl" id="g-dbi">
       <h3>지향성 · dBi</h3>
+      <p class="gen" lang="en">Directivity · dBi (decibels relative to isotropic)</p>
       <p class="gshort">가장 센 방향의 세기가 모든 방향으로 고르게 퍼질 때보다 몇 배인지를 나타냅니다. dBi는 등방성 안테나 대비 데시벨입니다.</p>
       <div class="formula">D = 4π × (최대 방사 세기) ÷ (전체 방사 전력)<br>D (dBi) = 10 · log₁₀ D</div>
       <p class="gex">반파장 다이폴은 약 2.15 dBi입니다. 손실이 없다고 볼 때의 값이라 이득과 같습니다.</p>
     </div>
     <div class="gl" id="g-pol">
       <h3>편파</h3>
+      <p class="gen" lang="en">Polarization</p>
       <p class="gshort">전기장이 진동하는 방향입니다. 수평으로 건 와이어는 수평편파, 수직 안테나는 수직편파를 냅니다.</p>
     </div>
     <div class="gl" id="g-swr">
       <h3>SWR (정재파비)</h3>
+      <p class="gen" lang="en">Standing Wave Ratio</p>
       <p class="gshort">급전선과 안테나의 임피던스가 얼마나 잘 맞는지를 나타냅니다. 전파가 나가는 방향과는 관계가 없습니다.</p>
       <div class="formula">SWR = (1 + |Γ|) ÷ (1 − |Γ|), Γ = (Z − Z₀) ÷ (Z + Z₀)</div>
     </div>
     <div class="gl" id="g-dx">
       <h3>DX</h3>
+      <p class="gen" lang="en">DX (long-distance contact)</p>
       <p class="gshort">먼 거리 교신을 뜻하는 아마추어 무선 용어입니다. 보통 낮은 고각이 유리합니다.</p>
     </div>
   </div>
@@ -510,28 +522,33 @@ details.adv input[type=range]{margin-top:6px}
   <div class="glist">
     <div class="gl" id="g-mirror">
       <h3>거울상 안테나</h3>
+      <p class="gen" lang="en">Image antenna · Image theory</p>
       <p class="gshort">땅에 반사된 전파를, 땅속 같은 깊이에 있는 가상의 안테나에서 나온 것으로 보는 계산 방법입니다.</p>
       <p class="gex">수평 안테나의 거울상은 전류 방향이 반대입니다. 그래서 반사 때 위상이 180° 뒤집힙니다.</p>
       <p class="gnote">가정: 완전 도체 대지. 실제 대지에서는 반사가 약해져 널이 조금 메워집니다.</p>
     </div>
     <div class="gl" id="g-pathdiff">
       <h3>경로차</h3>
+      <p class="gen" lang="en">Path difference</p>
       <p class="gshort">고각 θ 방향으로 볼 때 직접파와 반사파가 지나는 거리의 차이입니다.</p>
       <div class="formula">Δ = 2h · sin θ</div>
     </div>
     <div class="gl" id="g-groundfactor">
       <h3>대지 계수</h3>
+      <p class="gen" lang="en">Ground factor · Ground reflection factor</p>
       <p class="gshort">높이 때문에 생기는 고각 방향의 세기 변화입니다. 수평 안테나의 패턴에 이 값을 곱합니다.</p>
       <div class="formula">AF(θ) = |sin(2π · h/λ · sin θ)|</div>
     </div>
     <div class="gl" id="g-mainangle">
       <h3>주 로브 고각</h3>
+      <p class="gen" lang="en">Main-lobe elevation angle</p>
       <p class="gshort">대지 계수가 처음으로 최대가 되는 고각입니다.</p>
       <div class="formula">sin θ = 1 ÷ (4 · h/λ)　(h ≥ 0.25λ)<br>h &lt; 0.25λ 이면 90° (바로 위)</div>
       <p class="gex">예: 0.5λ → 30°, 1λ → 14.5°</p>
     </div>
     <div class="gl" id="g-nullangle">
       <h3>널 고각</h3>
+      <p class="gen" lang="en">Null elevation angle</p>
       <p class="gshort">대지 계수가 0이 되는 고각입니다.</p>
       <div class="formula">sin θ = k ÷ (2 · h/λ),　k = 1, 2, 3, …</div>
       <p class="gex">예: 1λ → 30°, 90°</p>
@@ -545,12 +562,14 @@ details.adv input[type=range]{margin-top:6px}
   <div class="glist">
     <div class="gl" id="g-standing">
       <h3>정재파 · 진행파</h3>
+      <p class="gen" lang="en">Standing wave · Traveling wave</p>
       <p class="gshort">급전점에서 나간 파와 끝에서 반사돼 돌아온 파가 겹친 것이 정재파입니다. 돌아오는 파가 약해진 만큼 진행파 성분이 섞입니다.</p>
       <div class="formula">I(d) = e<sup>−αd</sup>·e<sup>−jkd</sup> − e<sup>−α(2L−d)</sup>·e<sup>−jk(2L−d)</sup><br>k = 2π ÷ λ,　진행파 성분 = 1 − e<sup>−2αL</sup></div>
       <p class="gex">d는 급전점에서의 거리, L은 급전점에서 끝까지의 길이입니다. 중앙 급전은 양쪽 다리에 각각 적용합니다.</p>
     </div>
     <div class="gl" id="g-pattern">
       <h3>방사 패턴 계산</h3>
+      <p class="gen" lang="en">Radiation pattern</p>
       <p class="gshort">와이어 위 각 지점의 전류가 내는 전파를 위상까지 고려해 모두 더한 결과입니다.</p>
       <div class="formula">E(ψ) ∝ sin ψ · |∫ I(x) · e<sup>jkx·cos ψ</sup> dx|<br>cos ψ = cos θ · cos φ</div>
       <p class="gex">ψ는 와이어 축과 보는 방향 사이의 각도입니다.</p>
@@ -558,12 +577,14 @@ details.adv input[type=range]{margin-top:6px}
     </div>
     <div class="gl" id="g-impedance">
       <h3>급전점 임피던스</h3>
+      <p class="gen" lang="en">Feed-point impedance</p>
       <p class="gshort">급전점에서 본 전압과 전류의 비입니다. 전류가 큰 곳은 낮고, 전류가 작은 곳은 높습니다.</p>
       <div class="formula">Z = V ÷ I</div>
       <p class="gex">반파장 다이폴 중앙: 약 73 Ω(자유공간). 반파장 끝, 1λ 중앙: 수천 Ω.</p>
     </div>
     <div class="gl" id="g-efhw">
       <h3>EFHW · 49:1 언언</h3>
+      <p class="gen" lang="en">End-Fed Half-Wave · 49:1 UNUN (Unbalanced-to-Unbalanced)</p>
       <p class="gshort">반파장 와이어를 끝에서 급전하는 안테나입니다. 끝의 높은 임피던스를 50 Ω에 맞추려고 49:1 변환기를 씁니다.</p>
       <div class="formula">임피던스 비 = (권선비)² = 7² = 49<br>50 Ω × 49 ≈ 2,450 Ω</div>
       <p class="gex">반파장 배수 길이에서 공진하므로 40m용 와이어를 20m·15m·10m에서도 쓸 수 있습니다.</p>
@@ -577,43 +598,52 @@ details.adv input[type=range]{margin-top:6px}
   <div class="glist">
     <div class="gl" id="g-f2">
       <h3>F2층</h3>
+      <p class="gen" lang="en">F2 layer</p>
       <p class="gshort">단파를 멀리 보내는 주된 반사층입니다. 지상 약 250~400 km에 있습니다.</p>
       <p class="gnote">가정: 이 페이지는 300 km 높이의 반사면 하나로 계산합니다.</p>
     </div>
     <div class="gl" id="g-fof2">
       <h3>foF2 (임계주파수)</h3>
+      <p class="gen" lang="en">Critical frequency of the F2 layer</p>
       <p class="gshort">바로 위로 쏜 전파가 되돌아오는 최고 주파수입니다. F2층의 전자 밀도가 높을수록 높습니다.</p>
       <div class="formula">foF2 (Hz) ≈ 8.98 × √N<sub>max</sub>　(N<sub>max</sub>: 최대 전자 밀도, 개/m³)</div>
       <p class="gex">N = 10¹² 개/m³ 이면 약 9 MHz. 대략 낮 6~12 MHz, 밤 3~6 MHz입니다.</p>
     </div>
     <div class="gl" id="g-muf">
       <h3>MUF (최고 사용 주파수)</h3>
+      <p class="gen" lang="en">Maximum Usable Frequency</p>
       <p class="gshort">정해진 거리(발사각)로 보낼 때 전리층이 되돌려 주는 최고 주파수입니다. 비스듬히 들어갈수록 높아집니다.</p>
-      <div class="formula">MUF = foF2 ÷ cos i　(정할 법칙)<br>sin i = R · cos β ÷ (R + h)</div>
+      <div class="formula">MUF = foF2 ÷ cos i　(정할 법칙 · secant law)<br>sin i = R · cos β ÷ (R + h)</div>
       <p class="gex">i는 전리층에서의 입사각, β는 발사각, R = 6,371 km, h = 300 km입니다. 지구 곡률 때문에 수평으로 쏘아도 foF2의 약 3.4배가 한계입니다.</p>
     </div>
     <div class="gl" id="g-muf3000">
       <h3>MUF(3000)</h3>
+      <p class="gen" lang="en">MUF for a 3,000 km path · M(3000) factor</p>
       <p class="gshort">3,000 km 거리 기준의 MUF입니다. 전파 예보 사이트에 표시되는 "MUF"는 보통 이 값입니다.</p>
       <div class="formula">MUF(3000) = foF2 × M(3000),　M(3000) ≈ 2.5~3.5</div>
     </div>
     <div class="gl" id="g-hop">
       <h3>1홉 거리</h3>
+      <p class="gen" lang="en">Single-hop ground distance</p>
       <p class="gshort">전파가 전리층에서 한 번 반사돼 다시 땅에 닿기까지의 지표 거리입니다.</p>
+      <p class="gex">영어의 skip distance는 보통 "스킵존 끝까지의 거리", 즉 그 주파수로 닿을 수 있는 가장 가까운 거리를 뜻해서 이 값과 같지 않습니다.</p>
       <div class="formula">d = 2R · (π/2 − β − arcsin(R · cos β ÷ (R + h)))</div>
       <p class="gex">예: 30° → 약 930 km, 10° → 약 2,200 km</p>
     </div>
     <div class="gl" id="g-skip">
       <h3>스킵존</h3>
+      <p class="gen" lang="en">Skip zone</p>
       <p class="gshort">주파수가 foF2보다 높을 때, 가파른 전파가 뚫고 나가서 신호가 닿지 않는 송신점 주변 구역입니다.</p>
       <div class="formula">cos i &gt; foF2 ÷ f 인 가파른 각도는 통과</div>
     </div>
     <div class="gl" id="g-nvis">
       <h3>NVIS</h3>
+      <p class="gen" lang="en">Near Vertical Incidence Skywave</p>
       <p class="gshort">거의 수직(대략 60~90°)으로 쏘아 반경 수백 km를 스킵존 없이 덮는 방식입니다. 주파수가 foF2보다 낮아야 합니다.</p>
     </div>
     <div class="gl" id="g-dlayer">
       <h3>D층 흡수</h3>
+      <p class="gen" lang="en">D-layer absorption</p>
       <p class="gshort">낮에 지상 약 60~90 km에 생기는 D층이 전파 에너지를 흡수하는 현상입니다. 주파수가 낮을수록, 비스듬히 지날수록 큽니다.</p>
       <div class="formula">L (dB) ≈ 677.2 · I · sec i<sub>100</sub> ÷ ((f + 1.3)<sup>1.98</sup> + 10.2)</div>
       <p class="gex">f는 MHz, i<sub>100</sub>은 100 km 높이에서의 입사각, I는 햇빛 세기 계수(낮 1, 밤 거의 0)입니다.</p>
@@ -1095,7 +1125,7 @@ const vert=document.getElementById('vert');
     });
   }
   const pop=document.createElement('div');pop.className='tpop';pop.hidden=true;pop.setAttribute('role','dialog');
-  pop.innerHTML='<div class="tpop-h"></div><p class="tpop-b"></p><button type="button" class="tpop-go">계산식과 자세한 설명 →</button>';
+  pop.innerHTML='<div class="tpop-h"></div><div class="tpop-en" lang="en"></div><p class="tpop-b"></p><button type="button" class="tpop-go">계산식과 자세한 설명 →</button>';
   document.body.appendChild(pop);let curKey=null,curBtn=null;
   function close(){pop.hidden=true;if(curBtn)curBtn.setAttribute('aria-expanded','false');curKey=null;curBtn=null}
   function open(btn){
@@ -1103,6 +1133,7 @@ const vert=document.getElementById('vert');
     if(curBtn===btn){close();return}close();
     pop.querySelector('.tpop-h').textContent=g.querySelector('h3').textContent;
     pop.querySelector('.tpop-b').textContent=g.querySelector('.gshort').textContent;
+    const en=g.querySelector('.gen');pop.querySelector('.tpop-en').textContent=en?en.textContent:'';pop.querySelector('.tpop-en').hidden=!en;
     pop.hidden=false;curKey=key;curBtn=btn;btn.setAttribute('aria-expanded','true');
     const r=btn.getBoundingClientRect(),W=Math.min(320,document.documentElement.clientWidth-24);pop.style.width=W+'px';
     let x=r.left+window.scrollX;x=Math.max(12,Math.min(x,document.documentElement.clientWidth-W-12));
