@@ -122,6 +122,9 @@ section>p,.fig>p{margin:0}
 section{gap:12px}
 .tabpanel[hidden],[hidden]{display:none!important}
 #feedSel label,.btns button,#ionoTime label{font-family:var(--sans)}
+.btns button.twoline{display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-align:left;padding:7px 12px}
+.btns button.twoline .bt{font-weight:600;font-size:14px;color:var(--ink)}
+.btns button.twoline .bs{font-size:12px;color:var(--muted)}
 .ctl .sub,.clabel .sub{font-size:12px;color:var(--muted);font-weight:400}
 .clabel output{font-family:var(--mono);font-weight:600;color:var(--ink)}
 .bands input:disabled+label{opacity:.35;cursor:not-allowed;text-decoration:line-through}
@@ -238,7 +241,7 @@ details.adv input[type=range]{margin-top:6px}
       <div class="ctl" style="flex-basis:100%"><label for="iB">3. 발사각</label><output id="iBo"></output><input type="range" id="iB" min="3" max="90" step="1" value="30"></div>
     </div>
     <div class="btns">
-      <button type="button" id="pSync">위 계산기의 밴드·높이로 맞추기</button>
+      <button type="button" id="pSync" class="twoline"><span class="bt">내 안테나 설정 적용</span><span class="bs">위 계산기의 밴드와 주 로브 각도를 가져옵니다</span></button>
     </div>
     <svg id="iono" viewBox="0 0 700 250" role="img" aria-label="지구 곡률과 F2층 높이를 실제 비율로 그린 1홉 경로"></svg>
     <div class="stats five">
@@ -381,8 +384,8 @@ details.adv input[type=range]{margin-top:6px}
       </div>
     </div>
     <div class="btns">
-      <button type="button" id="g3Sync">높이 탭의 h/λ 가져오기</button>
-      <button type="button" id="g3Reset">시점 초기화</button>
+      <button type="button" id="g3Sync" class="twoline"><span class="bt">내 안테나 높이 적용</span><span class="bs">높이 탭 계산기의 지상고를 파장 단위로 가져옵니다</span></button>
+      <button type="button" id="g3Reset" class="twoline"><span class="bt">시점 초기화</span><span class="bs">처음 보던 각도로 되돌립니다</span></button>
     </div>
     <canvas id="g3" aria-label="입체 방사 패턴. 끌어서 회전" role="img"></canvas>
     <p class="note">급전 방식과 와이어 길이는 위 설정을 따릅니다. 색이 진할수록 센 방향이고, 가는 선이 와이어입니다.</p>
