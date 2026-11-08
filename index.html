@@ -154,6 +154,33 @@ details.adv input[type=range]{margin-top:6px}
 .embed .wrap{max-width:1180px;padding-block:12px 28px}
 .embed .azgrid svg{max-width:480px}
 .embed .smgrid svg{max-width:190px}
+.term{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:help;border-bottom:1.5px dotted var(--muted);line-height:inherit;display:inline;text-align:inherit}
+.term:hover,.term[aria-expanded="true"]{border-bottom-color:var(--lobe);color:var(--ink)}
+.term:focus-visible{outline:2px solid var(--wave2);outline-offset:2px;border-radius:2px}
+.tpop{position:absolute;z-index:20;background:var(--panel);color:var(--ink);border:1.5px solid var(--lobe);border-radius:8px;padding:12px 14px;box-shadow:0 6px 24px rgba(19,33,43,.18);display:flex;flex-direction:column;gap:6px;font-size:14px;line-height:1.55}
+.tpop[hidden]{display:none}
+.tpop-h{font-weight:700;font-size:15px}
+.tpop-b{margin:0}
+.tpop-go{align-self:flex-start;font:600 13px var(--sans);color:var(--lobe);background:none;border:0;padding:2px 0;cursor:pointer}
+.tpop-go:hover{text-decoration:underline}
+.gtoc{display:flex;flex-wrap:wrap;gap:6px}
+.gtoc a{font-size:13px;padding:4px 12px;border:1px solid var(--grid);border-radius:999px;color:var(--ink);text-decoration:none}
+.gtoc a:hover{border-color:var(--lobe)}
+.glist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:720px){.glist{grid-template-columns:1fr}}
+.gl{background:var(--panel);border:1px solid var(--grid);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0;scroll-margin-top:16px}
+.gl h3{margin:0;font-size:16px}
+.gl p{margin:0;max-width:none}
+.gshort{font-size:14px}
+.gex{font-size:13px;color:var(--muted)}
+.gnote{font-size:12px;color:var(--muted);border-top:1px dashed var(--grid);padding-top:6px}
+.formula{font-family:var(--mono);font-size:13.5px;background:var(--paper);border-radius:4px;padding:8px 10px;overflow-x:auto;line-height:1.7;word-break:normal}
+.gl.flash{animation:gflash 1.6s ease-out}
+@keyframes gflash{0%{border-color:var(--lobe);box-shadow:0 0 0 3px var(--lobe-fill)}100%{border-color:var(--grid);box-shadow:none}}
+@media (prefers-reduced-motion:reduce){.gl.flash{animation:none;border-color:var(--lobe)}}
+.nextnav.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:520px){.nextnav.two{grid-template-columns:1fr}}
+@media (max-width:520px){.tabs button{padding:9px 4px;font-size:13px;gap:3px}}
 </style>
 </head>
 <body>
@@ -171,6 +198,7 @@ details.adv input[type=range]{margin-top:6px}
 <nav class="tabs" role="tablist" aria-labelledby="tabhint">
   <button type="button" role="tab" id="t-height" aria-controls="tab-height" aria-selected="true"><span class="tt">높이 · 고각</span><span class="chev" aria-hidden="true">›</span></button>
   <button type="button" role="tab" id="t-length" aria-controls="tab-length" aria-selected="false"><span class="tt">길이 · 방위</span><span class="chev" aria-hidden="true">›</span></button>
+  <button type="button" role="tab" id="t-terms" aria-controls="tab-terms" aria-selected="false"><span class="tt">용어 · 공식</span><span class="chev" aria-hidden="true">›</span></button>
 </nav>
 </div>
 
@@ -404,7 +432,197 @@ details.adv input[type=range]{margin-top:6px}
     <li>위아래 각도는 높이가, 수평 방향은 길이와 급전 방식이 정합니다.</li>
   </ul>
 </section>
-<div class="nextnav"><button type="button" data-go="height"><span class="ts">앞 주제</span><span class="tt">← 1. 높이 · 고각</span><span class="ts">높이가 바꾸는 위아래 각도</span></button></div>
+<div class="nextnav two"><button type="button" data-go="height"><span class="ts">앞 주제</span><span class="tt">← 1. 높이 · 고각</span><span class="ts">높이가 바꾸는 위아래 각도</span></button><button type="button" data-go="terms"><span class="ts">참고</span><span class="tt">용어 · 공식 →</span><span class="ts">이 페이지의 용어와 계산식</span></button></div>
+
+</div>
+
+<div class="tabpanel" id="tab-terms" role="tabpanel" aria-labelledby="t-terms" hidden>
+
+<section>
+  <div class="eyebrow">용어 · 공식</div>
+  <h2>이 페이지에 나오는 용어와 계산식</h2>
+  <p>본문에서 점선 밑줄이 그어진 용어를 누르면 짧은 설명이 뜨고, 여기서 자세한 내용과 계산식을 볼 수 있습니다. 각 항목 끝에는 이 페이지의 계산이 무엇을 가정했는지도 적었습니다.</p>
+  <nav class="gtoc" aria-label="용어 묶음">
+    <a href="#gs-basic" data-gs="gs-basic">기본</a>
+    <a href="#gs-height" data-gs="gs-height">높이 · 대지 반사</a>
+    <a href="#gs-length" data-gs="gs-length">길이 · 와이어 전류</a>
+    <a href="#gs-iono" data-gs="gs-iono">전리층</a>
+  </nav>
+</section>
+
+<section id="gs-basic">
+  <div class="eyebrow">기본</div>
+  <h2>기본 용어</h2>
+  <div class="glist">
+    <div class="gl" id="g-lambda">
+      <h3>파장 λ</h3>
+      <p class="gshort">전파가 한 번 진동하는 동안 나아가는 거리입니다. 주파수가 높을수록 짧아집니다.</p>
+      <div class="formula">λ (m) = 299.8 ÷ f (MHz)</div>
+      <p class="gex">예: 14.2 MHz → 약 21.1 m, 7.1 MHz → 약 42.2 m</p>
+    </div>
+    <div class="gl" id="g-hl">
+      <h3>파장 대비 높이 h/λ</h3>
+      <p class="gshort">안테나 지상고를 미터가 아니라 파장 단위로 나타낸 값입니다. 같은 10 m라도 밴드마다 h/λ가 달라 패턴이 달라집니다.</p>
+      <div class="formula">h/λ = h (m) × f (MHz) ÷ 299.8</div>
+      <p class="gex">예: 10.5 m 높이 · 14.2 MHz → 약 0.50λ</p>
+    </div>
+    <div class="gl" id="g-elev">
+      <h3>고각 θ</h3>
+      <p class="gshort">수평선에서 위쪽으로 잰 각도입니다. 0°는 수평선, 90°는 바로 위입니다.</p>
+    </div>
+    <div class="gl" id="g-azim">
+      <h3>방위각 φ</h3>
+      <p class="gshort">위에서 내려다봤을 때 수평으로 잰 각도입니다. 이 페이지는 와이어 축을 0°, 와이어 정면을 90°로 둡니다.</p>
+    </div>
+    <div class="gl" id="g-lobe">
+      <h3>로브</h3>
+      <p class="gshort">방사 패턴에서 전파가 강하게 나가는 방향의 덩어리입니다. 가장 큰 것을 주 로브라고 합니다.</p>
+    </div>
+    <div class="gl" id="g-null">
+      <h3>널</h3>
+      <p class="gshort">방사가 거의 0이 되는 방향입니다. 여러 경로의 전파가 서로 지워질 때 생깁니다.</p>
+    </div>
+    <div class="gl" id="g-dbi">
+      <h3>지향성 · dBi</h3>
+      <p class="gshort">가장 센 방향의 세기가 모든 방향으로 고르게 퍼질 때보다 몇 배인지를 나타냅니다. dBi는 등방성 안테나 대비 데시벨입니다.</p>
+      <div class="formula">D = 4π × (최대 방사 세기) ÷ (전체 방사 전력)<br>D (dBi) = 10 · log₁₀ D</div>
+      <p class="gex">반파장 다이폴은 약 2.15 dBi입니다. 손실이 없다고 볼 때의 값이라 이득과 같습니다.</p>
+    </div>
+    <div class="gl" id="g-pol">
+      <h3>편파</h3>
+      <p class="gshort">전기장이 진동하는 방향입니다. 수평으로 건 와이어는 수평편파, 수직 안테나는 수직편파를 냅니다.</p>
+    </div>
+    <div class="gl" id="g-swr">
+      <h3>SWR (정재파비)</h3>
+      <p class="gshort">급전선과 안테나의 임피던스가 얼마나 잘 맞는지를 나타냅니다. 전파가 나가는 방향과는 관계가 없습니다.</p>
+      <div class="formula">SWR = (1 + |Γ|) ÷ (1 − |Γ|), Γ = (Z − Z₀) ÷ (Z + Z₀)</div>
+    </div>
+    <div class="gl" id="g-dx">
+      <h3>DX</h3>
+      <p class="gshort">먼 거리 교신을 뜻하는 아마추어 무선 용어입니다. 보통 낮은 고각이 유리합니다.</p>
+    </div>
+  </div>
+</section>
+
+<section id="gs-height">
+  <div class="eyebrow">높이</div>
+  <h2>높이 · 대지 반사</h2>
+  <div class="glist">
+    <div class="gl" id="g-mirror">
+      <h3>거울상 안테나</h3>
+      <p class="gshort">땅에 반사된 전파를, 땅속 같은 깊이에 있는 가상의 안테나에서 나온 것으로 보는 계산 방법입니다.</p>
+      <p class="gex">수평 안테나의 거울상은 전류 방향이 반대입니다. 그래서 반사 때 위상이 180° 뒤집힙니다.</p>
+      <p class="gnote">가정: 완전 도체 대지. 실제 대지에서는 반사가 약해져 널이 조금 메워집니다.</p>
+    </div>
+    <div class="gl" id="g-pathdiff">
+      <h3>경로차</h3>
+      <p class="gshort">고각 θ 방향으로 볼 때 직접파와 반사파가 지나는 거리의 차이입니다.</p>
+      <div class="formula">Δ = 2h · sin θ</div>
+    </div>
+    <div class="gl" id="g-groundfactor">
+      <h3>대지 계수</h3>
+      <p class="gshort">높이 때문에 생기는 고각 방향의 세기 변화입니다. 수평 안테나의 패턴에 이 값을 곱합니다.</p>
+      <div class="formula">AF(θ) = |sin(2π · h/λ · sin θ)|</div>
+    </div>
+    <div class="gl" id="g-mainangle">
+      <h3>주 로브 고각</h3>
+      <p class="gshort">대지 계수가 처음으로 최대가 되는 고각입니다.</p>
+      <div class="formula">sin θ = 1 ÷ (4 · h/λ)　(h ≥ 0.25λ)<br>h &lt; 0.25λ 이면 90° (바로 위)</div>
+      <p class="gex">예: 0.5λ → 30°, 1λ → 14.5°</p>
+    </div>
+    <div class="gl" id="g-nullangle">
+      <h3>널 고각</h3>
+      <p class="gshort">대지 계수가 0이 되는 고각입니다.</p>
+      <div class="formula">sin θ = k ÷ (2 · h/λ),　k = 1, 2, 3, …</div>
+      <p class="gex">예: 1λ → 30°, 90°</p>
+    </div>
+  </div>
+</section>
+
+<section id="gs-length">
+  <div class="eyebrow">길이</div>
+  <h2>길이 · 와이어 전류</h2>
+  <div class="glist">
+    <div class="gl" id="g-standing">
+      <h3>정재파 · 진행파</h3>
+      <p class="gshort">급전점에서 나간 파와 끝에서 반사돼 돌아온 파가 겹친 것이 정재파입니다. 돌아오는 파가 약해진 만큼 진행파 성분이 섞입니다.</p>
+      <div class="formula">I(d) = e<sup>−αd</sup>·e<sup>−jkd</sup> − e<sup>−α(2L−d)</sup>·e<sup>−jk(2L−d)</sup><br>k = 2π ÷ λ,　진행파 성분 = 1 − e<sup>−2αL</sup></div>
+      <p class="gex">d는 급전점에서의 거리, L은 급전점에서 끝까지의 길이입니다. 중앙 급전은 양쪽 다리에 각각 적용합니다.</p>
+    </div>
+    <div class="gl" id="g-pattern">
+      <h3>방사 패턴 계산</h3>
+      <p class="gshort">와이어 위 각 지점의 전류가 내는 전파를 위상까지 고려해 모두 더한 결과입니다.</p>
+      <div class="formula">E(ψ) ∝ sin ψ · |∫ I(x) · e<sup>jkx·cos ψ</sup> dx|<br>cos ψ = cos θ · cos φ</div>
+      <p class="gex">ψ는 와이어 축과 보는 방향 사이의 각도입니다.</p>
+      <p class="gnote">가정: 가는 와이어, 손실 없음. 동축 외피와 카운터포이즈의 방사는 넣지 않았습니다.</p>
+    </div>
+    <div class="gl" id="g-impedance">
+      <h3>급전점 임피던스</h3>
+      <p class="gshort">급전점에서 본 전압과 전류의 비입니다. 전류가 큰 곳은 낮고, 전류가 작은 곳은 높습니다.</p>
+      <div class="formula">Z = V ÷ I</div>
+      <p class="gex">반파장 다이폴 중앙: 약 73 Ω(자유공간). 반파장 끝, 1λ 중앙: 수천 Ω.</p>
+    </div>
+    <div class="gl" id="g-efhw">
+      <h3>EFHW · 49:1 언언</h3>
+      <p class="gshort">반파장 와이어를 끝에서 급전하는 안테나입니다. 끝의 높은 임피던스를 50 Ω에 맞추려고 49:1 변환기를 씁니다.</p>
+      <div class="formula">임피던스 비 = (권선비)² = 7² = 49<br>50 Ω × 49 ≈ 2,450 Ω</div>
+      <p class="gex">반파장 배수 길이에서 공진하므로 40m용 와이어를 20m·15m·10m에서도 쓸 수 있습니다.</p>
+    </div>
+  </div>
+</section>
+
+<section id="gs-iono">
+  <div class="eyebrow">전리층</div>
+  <h2>전리층</h2>
+  <div class="glist">
+    <div class="gl" id="g-f2">
+      <h3>F2층</h3>
+      <p class="gshort">단파를 멀리 보내는 주된 반사층입니다. 지상 약 250~400 km에 있습니다.</p>
+      <p class="gnote">가정: 이 페이지는 300 km 높이의 반사면 하나로 계산합니다.</p>
+    </div>
+    <div class="gl" id="g-fof2">
+      <h3>foF2 (임계주파수)</h3>
+      <p class="gshort">바로 위로 쏜 전파가 되돌아오는 최고 주파수입니다. F2층의 전자 밀도가 높을수록 높습니다.</p>
+      <div class="formula">foF2 (Hz) ≈ 8.98 × √N<sub>max</sub>　(N<sub>max</sub>: 최대 전자 밀도, 개/m³)</div>
+      <p class="gex">N = 10¹² 개/m³ 이면 약 9 MHz. 대략 낮 6~12 MHz, 밤 3~6 MHz입니다.</p>
+    </div>
+    <div class="gl" id="g-muf">
+      <h3>MUF (최고 사용 주파수)</h3>
+      <p class="gshort">정해진 거리(발사각)로 보낼 때 전리층이 되돌려 주는 최고 주파수입니다. 비스듬히 들어갈수록 높아집니다.</p>
+      <div class="formula">MUF = foF2 ÷ cos i　(정할 법칙)<br>sin i = R · cos β ÷ (R + h)</div>
+      <p class="gex">i는 전리층에서의 입사각, β는 발사각, R = 6,371 km, h = 300 km입니다. 지구 곡률 때문에 수평으로 쏘아도 foF2의 약 3.4배가 한계입니다.</p>
+    </div>
+    <div class="gl" id="g-muf3000">
+      <h3>MUF(3000)</h3>
+      <p class="gshort">3,000 km 거리 기준의 MUF입니다. 전파 예보 사이트에 표시되는 "MUF"는 보통 이 값입니다.</p>
+      <div class="formula">MUF(3000) = foF2 × M(3000),　M(3000) ≈ 2.5~3.5</div>
+    </div>
+    <div class="gl" id="g-hop">
+      <h3>1홉 거리</h3>
+      <p class="gshort">전파가 전리층에서 한 번 반사돼 다시 땅에 닿기까지의 지표 거리입니다.</p>
+      <div class="formula">d = 2R · (π/2 − β − arcsin(R · cos β ÷ (R + h)))</div>
+      <p class="gex">예: 30° → 약 930 km, 10° → 약 2,200 km</p>
+    </div>
+    <div class="gl" id="g-skip">
+      <h3>스킵존</h3>
+      <p class="gshort">주파수가 foF2보다 높을 때, 가파른 전파가 뚫고 나가서 신호가 닿지 않는 송신점 주변 구역입니다.</p>
+      <div class="formula">cos i &gt; foF2 ÷ f 인 가파른 각도는 통과</div>
+    </div>
+    <div class="gl" id="g-nvis">
+      <h3>NVIS</h3>
+      <p class="gshort">거의 수직(대략 60~90°)으로 쏘아 반경 수백 km를 스킵존 없이 덮는 방식입니다. 주파수가 foF2보다 낮아야 합니다.</p>
+    </div>
+    <div class="gl" id="g-dlayer">
+      <h3>D층 흡수</h3>
+      <p class="gshort">낮에 지상 약 60~90 km에 생기는 D층이 전파 에너지를 흡수하는 현상입니다. 주파수가 낮을수록, 비스듬히 지날수록 큽니다.</p>
+      <div class="formula">L (dB) ≈ 677.2 · I · sec i<sub>100</sub> ÷ ((f + 1.3)<sup>1.98</sup> + 10.2)</div>
+      <p class="gex">f는 MHz, i<sub>100</sub>은 100 km 높이에서의 입사각, I는 햇빛 세기 계수(낮 1, 밤 거의 0)입니다.</p>
+      <p class="gnote">가정: 정오 중위도 기준 근사식이고, I는 foF2에서 대략 정했습니다. 실제 흡수는 계절, 태양 활동, 시각에 따라 크게 달라집니다. E층 반사는 넣지 않았습니다.</p>
+    </div>
+  </div>
+</section>
+
+<div class="nextnav"><button type="button" data-go="height"><span class="ts">처음으로</span><span class="tt">← 1. 높이 · 고각</span><span class="ts">본문으로 돌아가기</span></button></div>
 
 </div>
 
@@ -619,18 +837,23 @@ const vert=document.getElementById('vert');
 
 /* ===== 탭 ===== */
 (function(){
-  const tabs={height:document.getElementById('t-height'),length:document.getElementById('t-length')};
-  const panels={height:document.getElementById('tab-height'),length:document.getElementById('tab-length')};
+  const ORDER=['height','length','terms'],tabs={},panels={};
+  ORDER.forEach(k=>{tabs[k]=document.getElementById('t-'+k);panels[k]=document.getElementById('tab-'+k)});
   function show(name,push){
     if(!panels[name])name='height';
     for(const k in tabs){const on=k===name;tabs[k].setAttribute('aria-selected',on);tabs[k].tabIndex=on?0:-1;panels[k].hidden=!on}
     if(push){try{history.replaceState(null,'','#'+name)}catch(e){location.hash=name}}
     window.dispatchEvent(new Event('tabshow'));
   }
-  tabs.height.onclick=()=>show('height',true);tabs.length.onclick=()=>show('length',true);
-  document.querySelector('.tabs').addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){const n=tabs.height.getAttribute('aria-selected')==='true'?'length':'height';show(n,true);tabs[n].focus()}});
-  const toTop=()=>{if(document.documentElement.classList.contains('embed')){try{parent.postMessage({type:'wap-top'},'*')}catch(e){}}
-    else{const t=document.querySelector('.tabwrap');window.scrollTo({top:Math.max(0,t.getBoundingClientRect().top+window.scrollY-12)})}};
+  ORDER.forEach(k=>tabs[k].onclick=()=>show(k,true));
+  document.querySelector('.tabs').addEventListener('keydown',e=>{if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft')return;
+    const cur=ORDER.findIndex(k=>tabs[k].getAttribute('aria-selected')==='true'),n=ORDER[(cur+(e.key==='ArrowRight'?1:ORDER.length-1))%ORDER.length];show(n,true);tabs[n].focus()});
+  /* el 위치로 스크롤. 임베드면 부모 페이지에 iframe 안 위치(y)를 알려 준다 */
+  const toEl=el=>{const y=Math.max(0,el.getBoundingClientRect().top+window.scrollY-12);
+    if(document.documentElement.classList.contains('embed')){try{parent.postMessage({type:'wap-top',y},'*')}catch(e){}}
+    else window.scrollTo({top:y})};
+  const toTop=()=>toEl(document.querySelector('.tabwrap'));
+  window.__wapShow=show;window.__wapToEl=toEl;
   document.querySelectorAll('.golen').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();show('length',true);toTop()}));
   document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>{show(b.dataset.go,true);toTop()}));
   window.addEventListener('hashchange',()=>show(location.hash.slice(1)));
@@ -825,6 +1048,75 @@ const vert=document.getElementById('vert');
   try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',req)}catch(e){}
   new MutationObserver(req).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
   updateMain();
+})();
+
+/* ===== 용어 팝업 ===== */
+(function(){
+  const RULES=[['foF2','fof2'],['MUF','muf'],['1홉','hop'],['스킵존','skip'],['NVIS','nvis'],['D층','dlayer'],['F2층','f2'],
+    ['거울상 안테나','mirror'],['경로차','pathdiff'],['고각','elev'],['방위','azim'],['로브','lobe'],['널(?!리)','null'],['파장','lambda'],
+    ['편파','pol'],['SWR','swr'],['DX','dx'],['정재파','standing'],['진행파','standing'],['임피던스','impedance'],['EFHW','efhw'],['지향성','dbi']];
+  const SKIP='a,button,code,label,output,h1,h2,h3,.eyebrow,.tabs,.formula,svg';
+  function wrapScope(root){
+    const done=new Set();
+    root.querySelectorAll('p,li').forEach(el=>{
+      if(el.closest('#tab-terms')||el.closest(SKIP))return;
+      const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+      nodes.forEach(n=>{
+        if(n.parentElement.closest(SKIP))return;
+        for(const [pat,key] of RULES){
+          if(done.has(key))continue;
+          const m=new RegExp(pat).exec(n.nodeValue);if(!m)continue;
+          const after=n.splitText(m.index);after.splitText(m[0].length);
+          const b=document.createElement('button');b.type='button';b.className='term';b.dataset.t=key;b.textContent=m[0];
+          after.parentNode.replaceChild(b,after);done.add(key);return;
+        }
+      });
+    });
+  }
+  /* 머리말은 고각·방위만, 각 탭은 용어별 첫 등장 하나에만 밑줄 */
+  const hdr=document.querySelector('header .lede');if(hdr)wrapScope2(hdr,['elev','azim']);
+  ['#tab-height','#tab-length'].forEach(sel=>{const r=document.querySelector(sel);if(r){wrapScope(r);wrapScope2(r)}});
+  function wrapScope2(root,allow){
+    const have=new Set([...root.querySelectorAll('.term')].map(b=>b.dataset.t));
+    if(allow)RULES.forEach(([,k])=>{if(!allow.includes(k))have.add(k)});
+    (root.matches('p,li')?[root]:root.querySelectorAll('p,li')).forEach(el=>{
+      if(el.closest(SKIP))return;
+      const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+      nodes.forEach(function go(n){
+        if(n.parentElement.closest(SKIP))return;
+        for(const [pat,key] of RULES){
+          if(have.has(key))continue;
+          const m=new RegExp(pat).exec(n.nodeValue);if(!m)continue;
+          const after=n.splitText(m.index),rest=after.splitText(m[0].length);
+          const b=document.createElement('button');b.type='button';b.className='term';b.dataset.t=key;b.textContent=m[0];
+          after.parentNode.replaceChild(b,after);have.add(key);go(rest);return;
+        }
+      });
+    });
+  }
+  const pop=document.createElement('div');pop.className='tpop';pop.hidden=true;pop.setAttribute('role','dialog');
+  pop.innerHTML='<div class="tpop-h"></div><p class="tpop-b"></p><button type="button" class="tpop-go">계산식과 자세한 설명 →</button>';
+  document.body.appendChild(pop);let curKey=null,curBtn=null;
+  function close(){pop.hidden=true;if(curBtn)curBtn.setAttribute('aria-expanded','false');curKey=null;curBtn=null}
+  function open(btn){
+    const key=btn.dataset.t,g=document.getElementById('g-'+key);if(!g)return;
+    if(curBtn===btn){close();return}close();
+    pop.querySelector('.tpop-h').textContent=g.querySelector('h3').textContent;
+    pop.querySelector('.tpop-b').textContent=g.querySelector('.gshort').textContent;
+    pop.hidden=false;curKey=key;curBtn=btn;btn.setAttribute('aria-expanded','true');
+    const r=btn.getBoundingClientRect(),W=Math.min(320,document.documentElement.clientWidth-24);pop.style.width=W+'px';
+    let x=r.left+window.scrollX;x=Math.max(12,Math.min(x,document.documentElement.clientWidth-W-12));
+    pop.style.left=x+'px';pop.style.top=(r.bottom+window.scrollY+8)+'px';
+  }
+  document.addEventListener('click',e=>{
+    const t=e.target.closest('.term');if(t){e.preventDefault();open(t);return}
+    if(e.target.closest('.tpop-go')){const k=curKey;close();window.__wapShow('terms',true);
+      const g=document.getElementById('g-'+k);if(g){requestAnimationFrame(()=>{window.__wapToEl(g);g.classList.remove('flash');void g.offsetWidth;g.classList.add('flash')})}return}
+    if(!e.target.closest('.tpop'))close();
+    const gs=e.target.closest('[data-gs]');if(gs){e.preventDefault();window.__wapToEl(document.getElementById(gs.dataset.gs))}
+  });
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!pop.hidden){const b=curBtn;close();if(b)b.focus()}});
+  window.addEventListener('tabshow',close);window.addEventListener('resize',close);
 })();
 </script>
 
