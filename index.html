@@ -1,6 +1,17 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="안테나 높이(고각)와 와이어 길이·급전 방식(방위)이 방사 패턴을 어떻게 바꾸는지 계산해 보여주는 인터랙티브 해설">
 <title>와이어 안테나 방사 패턴</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* 기본 리셋 (단독 실행용) */
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;font:14px/1.5 system-ui,sans-serif}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
 /* 레이아웃: 한 줄 세로 흐름. 주제 순서대로 섹션, 각 섹션은 설명 + 계산된 SVG 도판 */
@@ -139,6 +150,8 @@ details.adv input[type=range]{margin-top:6px}
 .embed .azgrid svg{max-width:480px}
 .embed .smgrid svg{max-width:190px}
 </style>
+</head>
+<body>
 
 <div class="wrap">
 <header>
@@ -211,7 +224,7 @@ details.adv input[type=range]{margin-top:6px}
   <div class="fig" style="display:flex;flex-direction:column;gap:14px">
     <div class="controls">
       <div class="ctl" style="flex-basis:100%"><span class="clabel">1. 밴드 <span class="sub" id="iFo"></span></span><div class="bands" id="ionoBands"></div><input type="hidden" id="iF" value="7.1"></div>
-      <div class="ctl" style="flex-basis:100%"><span class="clabel">2. 시간대 <span class="sub">전리층 상태 · foF2 <output id="iOo"></output></span></span>
+      <div class="ctl" style="flex-basis:100%"><span class="clabel">2. 시간대 <span class="sub">· foF2 <output id="iOo"></output> <span id="iOtag">(대표값)</span></span></span>
         <div class="bands" id="ionoTime">
           <input type="radio" name="itime" id="it9" value="9" checked><label for="it9">낮</label>
           <input type="radio" name="itime" id="it6" value="6"><label for="it6">해 질 녘</label>
@@ -572,7 +585,9 @@ const vert=document.getElementById('vert');
   IB.forEach(([n,f],i)=>{const inp=document.createElement('input');inp.type='radio';inp.name='iband';inp.id='ib'+i;inp.value=f;inp.checked=n==='40m';
     inp.addEventListener('change',()=>{iF.value=f;draw()});const l=document.createElement('label');l.htmlFor=inp.id;l.textContent=n;ibEl.append(inp,l)});
   document.querySelectorAll('input[name=itime]').forEach(r=>r.addEventListener('change',()=>{iO.value=r.value;draw()}));
-  iO.addEventListener('input',()=>{document.querySelectorAll('input[name=itime]').forEach(r=>r.checked=Math.abs(+r.value-+iO.value)<0.05);draw()});
+  const tagUpd=()=>{const on=[...document.querySelectorAll('input[name=itime]')].some(r=>r.checked);document.getElementById('iOtag').textContent=on?'(대표값)':'(직접 설정)'};
+  document.querySelectorAll('input[name=itime]').forEach(r=>r.addEventListener('change',tagUpd));
+  iO.addEventListener('input',()=>{document.querySelectorAll('input[name=itime]').forEach(r=>r.checked=Math.abs(+r.value-+iO.value)<0.05);tagUpd();draw()});
   iB.addEventListener('input',draw);
   document.getElementById('pSync').onclick=()=>{const [n,f]=BANDS[sel],H=(+mH.value)/(299.79/f),k=IB.findIndex(b=>b[0]===n);
     if(k>=0)document.getElementById('ib'+k).checked=true;iF.value=f;iB.value=Math.max(3,Math.round(mainAngle(H)));draw()};
@@ -790,4 +805,5 @@ const vert=document.getElementById('vert');
 })();
 </script>
 
-</body></html>
+</body>
+</html>
