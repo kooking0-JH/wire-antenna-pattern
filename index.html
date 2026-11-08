@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="안테나 높이(고각)와 와이어 길이·급전 방식(방위)이 방사 패턴을 어떻게 바꾸는지 계산해 보여주는 인터랙티브 해설">
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>와이어 안테나 방사 패턴</title>
-<style>
-/* 기본 리셋 (단독 실행용) */
-:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-body{margin:0;font:14px/1.5 system-ui,sans-serif}
-img{max-width:100%}
-[hidden]{display:none!important}
-</style>
+<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
 /* 레이아웃: 한 줄 세로 흐름. 주제 순서대로 섹션, 각 섹션은 설명 + 계산된 SVG 도판 */
@@ -101,22 +90,21 @@ ul.sum{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max
 .layerband{fill:none;stroke:var(--wave2);stroke-opacity:.12;stroke-width:28}
 .skip{stroke:var(--null);stroke-width:6;stroke-linecap:round;opacity:.75}
 .ok{color:var(--lobe)} .bad{color:var(--null)}
-.tabwrap{display:flex;flex-direction:column;gap:8px;margin-bottom:-16px}
-.tabhint{font-size:13px;color:var(--muted);margin:0}
-.tabs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.tabs button,.nextnav button{display:grid;grid-template-columns:auto 1fr;column-gap:12px;row-gap:2px;align-items:center;text-align:left;padding:14px 16px;border:2px solid var(--grid);border-radius:8px;background:var(--panel);color:var(--ink);cursor:pointer;font-family:var(--sans);min-width:0;transition:border-color .15s,background .15s}
-.tabs .tn{grid-row:1/4;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:600 14px var(--mono);border:2px solid var(--grid);color:var(--muted)}
-.tabs .tt,.nextnav .tt{font-weight:700;font-size:17px;line-height:1.3}
-.tabs .ts,.nextnav .ts{font-size:13px;color:var(--muted);line-height:1.4}
-.tabs .tgo{font-size:12px;font-weight:600;color:var(--lobe)}
-.tabs button[aria-selected="true"]{border-color:var(--lobe);background:var(--lobe-fill);cursor:default}
-.tabs button[aria-selected="true"] .tn{background:var(--lobe);border-color:var(--lobe);color:#1A1205}
-.tabs button[aria-selected="true"] .tgo{visibility:hidden}
-.tabs button[aria-selected="false"]:hover,.nextnav button:hover{border-color:var(--lobe)}
+.tabwrap{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px;margin-bottom:-16px}
+.tabhint{font-size:13px;color:var(--muted)}
+.tabs{display:inline-flex;gap:4px;padding:4px;border:1.5px solid var(--grid);border-radius:999px;background:var(--panel)}
+.tabs button{display:flex;align-items:center;justify-content:center;gap:6px;padding:9px 18px;border:1.5px solid var(--grid);border-radius:999px;background:var(--paper);color:var(--ink);font:600 15px var(--sans);cursor:pointer;box-shadow:0 1px 3px rgba(19,33,43,.14);transition:border-color .15s,background .15s,transform .05s}
+.tabs button:hover{border-color:var(--lobe)}
+.tabs button:active{transform:translateY(1px);box-shadow:none}
+.tabs button[aria-selected="true"]{background:var(--lobe);border-color:var(--lobe);color:#1A1205;box-shadow:none;cursor:default}
+.tabs button[aria-selected="true"] .chev{display:none}
+.tabs .chev{color:var(--lobe);font-size:19px;line-height:1;margin-top:-2px}
 .tabs button:focus-visible,.nextnav button:focus-visible{outline:2px solid var(--wave2);outline-offset:2px}
-.nextnav button{display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:100%}
-.nextnav .tt{color:var(--lobe);font-size:19px}
-@media (max-width:520px){.tabs button{grid-template-columns:1fr;padding:12px}.tabs .tn{grid-row:auto;width:26px;height:26px;font-size:12px}.tabs .tt{font-size:15px}}
+@media (max-width:520px){.tabs{display:flex;width:100%}.tabs button{flex:1;padding:9px 8px;font-size:14px}}
+.nextnav button{display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:100%;text-align:left;padding:14px 16px;border:2px solid var(--grid);border-radius:8px;background:var(--panel);color:var(--ink);cursor:pointer;font-family:var(--sans);transition:border-color .15s}
+.nextnav button:hover{border-color:var(--lobe)}
+.nextnav .tt{font-weight:700;font-size:19px;line-height:1.3;color:var(--lobe)}
+.nextnav .ts{font-size:13px;color:var(--muted);line-height:1.4}
 .tabpanel{display:flex;flex-direction:column;gap:56px}
 .tabpanel[hidden],[hidden]{display:none!important}
 #feedSel label,.btns button{font-family:var(--sans)}
@@ -141,8 +129,6 @@ ul.sum{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max
 .embed .azgrid svg{max-width:480px}
 .embed .smgrid svg{max-width:190px}
 </style>
-</head>
-<body>
 
 <div class="wrap">
 <header>
@@ -153,10 +139,10 @@ ul.sum{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max
 </header>
 
 <div class="tabwrap">
-<p class="tabhint">두 주제로 나뉘어 있습니다. 아래 카드를 눌러 바꿔 보세요.</p>
-<nav class="tabs" role="tablist" aria-label="주제">
-  <button type="button" role="tab" id="t-height" aria-controls="tab-height" aria-selected="true"><span class="tn">1</span><span class="tt">높이 · 고각</span><span class="ts">위아래로 몇 도로 나가나</span><span class="tgo">눌러서 보기 →</span></button>
-  <button type="button" role="tab" id="t-length" aria-controls="tab-length" aria-selected="false"><span class="tn">2</span><span class="tt">길이 · 방위</span><span class="ts">어느 방향으로 강한가</span><span class="tgo">눌러서 보기 →</span></button>
+<span class="tabhint" id="tabhint">주제 선택</span>
+<nav class="tabs" role="tablist" aria-labelledby="tabhint">
+  <button type="button" role="tab" id="t-height" aria-controls="tab-height" aria-selected="true"><span class="tt">높이 · 고각</span><span class="chev" aria-hidden="true">›</span></button>
+  <button type="button" role="tab" id="t-length" aria-controls="tab-length" aria-selected="false"><span class="tt">길이 · 방위</span><span class="chev" aria-hidden="true">›</span></button>
 </nav>
 </div>
 
@@ -763,5 +749,4 @@ const vert=document.getElementById('vert');
 })();
 </script>
 
-</body>
-</html>
+</body></html>
