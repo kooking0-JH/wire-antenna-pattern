@@ -125,6 +125,9 @@ ul.sum{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max
 .cur-pos{fill:var(--lobe-fill);stroke:var(--lobe);stroke-width:1.5}
 .cur-neg{fill:var(--wave2);fill-opacity:.2;stroke:var(--wave2);stroke-width:1.5}
 .azl{fill:var(--lobe-fill);stroke:var(--lobe);stroke-width:1.6}
+.embed .wrap{max-width:1180px;padding-block:12px 28px}
+.embed .azgrid svg{max-width:480px}
+.embed .smgrid svg{max-width:190px}
 </style>
 </head>
 <body>
@@ -356,6 +359,17 @@ ul.sum{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max
 </div>
 
 <script>
+/* 임베드 모드: ?embed=1 이면 넓은 레이아웃 + 부모 페이지에 높이 알림, ?theme=light|dark 로 테마 고정 */
+(function(){
+  let q;try{q=new URLSearchParams(location.search)}catch(e){return}
+  const t=q.get('theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);
+  if(!q.has('embed'))return;
+  document.documentElement.classList.add('embed');
+  const post=()=>{try{parent.postMessage({type:'wap-height',h:Math.ceil(document.documentElement.scrollHeight)},'*')}catch(e){}};
+  window.addEventListener('load',post);window.addEventListener('tabshow',()=>setTimeout(post,60));
+  try{new ResizeObserver(post).observe(document.body)}catch(e){setInterval(post,1000)}
+})();
+
 const NS='http://www.w3.org/2000/svg';
 function E(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
 function T(txt,a,p){const e=E('text',a,p);e.textContent=txt;return e}
