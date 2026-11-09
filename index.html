@@ -17,16 +17,16 @@ img{max-width:100%}
 /* 레이아웃: 한 줄 세로 흐름. 주제 순서대로 섹션, 각 섹션은 설명 + 계산된 SVG 도판 */
 :root{
   --paper:#EDF1F2; --panel:#F8FAFA; --ink:#13212B; --muted:#55666F; --grid:#CFD9DC;
-  --lobe:#D9940F; --lobe-fill:#E3A21A38; --wave2:#2B78AE; --null:#C2412D; --earth:#7A6548; --earth-top:#5E4C34; --post:#6B4E2E;
+  --lobe:#D9940F; --lobe-fill:#E3A21A38; --efc:#2A8A6A; --efc-fill:#2A8A6A2E; --wave2:#2B78AE; --null:#C2412D; --earth:#7A6548; --earth-top:#5E4C34; --post:#6B4E2E;
   --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --paper:#0F1A21; --panel:#15232C; --ink:#E4ECEF; --muted:#93A5AE; --grid:#24363F;
-  --lobe:#F2B53A; --lobe-fill:#F2B53A33; --wave2:#5DA9DD; --null:#E8705C; --earth:#5C4C37; --earth-top:#8A7454; --post:#A88A62; color-scheme:dark}}
+  --lobe:#F2B53A; --lobe-fill:#F2B53A33; --efc:#5CC79F; --efc-fill:#5CC79F33; --wave2:#5DA9DD; --null:#E8705C; --earth:#5C4C37; --earth-top:#8A7454; --post:#A88A62; color-scheme:dark}}
 :root[data-theme="dark"]{
   --paper:#0F1A21; --panel:#15232C; --ink:#E4ECEF; --muted:#93A5AE; --grid:#24363F;
-  --lobe:#F2B53A; --lobe-fill:#F2B53A33; --wave2:#5DA9DD; --null:#E8705C; --earth:#5C4C37; --earth-top:#8A7454; --post:#A88A62; color-scheme:dark}
+  --lobe:#F2B53A; --lobe-fill:#F2B53A33; --efc:#5CC79F; --efc-fill:#5CC79F33; --wave2:#5DA9DD; --null:#E8705C; --earth:#5C4C37; --earth-top:#8A7454; --post:#A88A62; color-scheme:dark}
 body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.7}
 .wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 64px;display:flex;flex-direction:column;gap:56px}
 h1{font-size:clamp(28px,5vw,42px);line-height:1.2;margin:0 0 12px;text-wrap:balance;letter-spacing:-.01em}
@@ -121,7 +121,15 @@ body{word-break:keep-all;overflow-wrap:break-word}
 section>p,.fig>p{margin:0}
 section{gap:12px}
 .tabpanel[hidden],[hidden]{display:none!important}
-#feedSel label,.btns button,#ionoTime label{font-family:var(--sans)}
+#feedSel label,.btns button,#ionoTime label,#groundSel label,#wireSel label,#feed3 label{font-family:var(--sans)}
+.antbox{border:1.5px solid var(--lobe);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:10px;background:var(--paper)}
+.antbox-h{font-weight:700;font-size:15px;color:var(--lobe)}
+.antbox .note{margin:0}
+.antsum{border-left:3px solid var(--lobe);padding:6px 12px;background:var(--lobe-fill);border-radius:0 6px 6px 0;display:flex;flex-direction:column;gap:2px}
+.antsum .as1{font-weight:700;font-size:14.5px}
+.antsum .as2{font-size:13px;color:var(--muted)}
+.antsum .as3{font-size:13px;color:var(--null);font-weight:600}
+.controls.compact .bands label{font-size:12px;padding:3px 9px}
 .btns button.twoline{display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-align:left;padding:7px 12px}
 .btns button.twoline .bt{font-weight:600;font-size:14px;color:var(--ink)}
 .btns button.twoline .bs{font-size:12px;color:var(--muted)}
@@ -139,7 +147,7 @@ details.adv input[type=range]{margin-top:6px}
 .stats.five{grid-template-columns:repeat(5,minmax(0,1fr))}
 @media (max-width:620px){.stats.five{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .stats.stack{grid-template-columns:1fr 1fr;gap:16px}
-.stats.stack div:last-child{grid-column:1/-1}
+
 .stats .sub{font-size:12px;color:var(--muted)}
 .smgrid{display:grid;grid-template-columns:auto repeat(4,minmax(0,1fr));gap:6px 10px;align-items:center}
 .smgrid .rh{font-size:13px;font-weight:600;writing-mode:horizontal-tb;color:var(--ink)}
@@ -151,6 +159,19 @@ details.adv input[type=range]{margin-top:6px}
 .cur-pos{fill:var(--lobe-fill);stroke:var(--lobe);stroke-width:1.5}
 .cur-neg{fill:var(--wave2);fill-opacity:.2;stroke:var(--wave2);stroke-width:1.5}
 .azl{fill:var(--lobe-fill);stroke:var(--lobe);stroke-width:1.6}
+.azl.end{fill:var(--efc-fill);stroke:var(--efc)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:0}
+.dot.c{background:var(--lobe)}.dot.e{background:var(--efc)}
+.cmp1{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:620px){.cmp1{grid-template-columns:1fr}}
+.cmpc{margin:0;display:flex;flex-direction:column;gap:6px;min-width:0;border:1px solid var(--grid);border-radius:8px;padding:12px;background:var(--paper)}
+.cmpc figcaption{font-weight:700;font-size:15px}
+.cmpc svg{width:100%;max-width:340px;margin:0 auto}
+.cmpst{margin:0;font-size:13px;color:var(--muted);text-align:center;font-family:var(--mono)}
+.cmph{margin:4px 0 0;font-size:15px}
+.smgrid .ch.hl{color:var(--lobe)}
+.smgrid svg.hl{background:var(--lobe-fill);border-radius:10px}
+.btns button:disabled{opacity:.55;cursor:default}
 .embed .wrap{max-width:1180px;padding-block:12px 28px}
 .embed .azgrid svg{max-width:480px}
 .embed .smgrid svg{max-width:190px}
@@ -236,17 +257,26 @@ details.adv input[type=range]{margin-top:6px}
   <div class="fig" style="display:flex;flex-direction:column;gap:14px">
     <div class="controls">
       <div class="ctl"><label for="mH">지상고 (m)</label><output id="mHo"></output><input type="range" id="mH" min="2" max="40" step="0.5" value="10.5"></div>
+      <div class="ctl" style="flex-basis:100%"><span class="clabel">대지 <span class="sub" id="gdesc"></span></span>
+        <div class="bands" id="groundSel">
+          <input type="radio" name="ground" id="gd0" value="perfect" checked><label for="gd0">완전 도체</label>
+          <input type="radio" name="ground" id="gd1" value="sea"><label for="gd1">바닷물</label>
+          <input type="radio" name="ground" id="gd2" value="avg"><label for="gd2">보통 대지</label>
+          <input type="radio" name="ground" id="gd3" value="poor"><label for="gd3">건조한 땅 · 도심</label>
+        </div>
+      </div>
       <div class="ctl" style="flex-basis:100%"><span style="font-size:13px;color:var(--muted)">밴드</span><div class="bands" id="bands"></div></div>
     </div>
     <svg id="big" role="img" aria-label="선택한 높이와 밴드의 고각 방사 패턴"></svg>
     <div class="stats">
       <div>파장 대비 높이<b id="sH"></b></div>
-      <div>주 로브 고각<b id="sA"></b></div>
-      <div>널 (상쇄 각도)<b id="sN"></b></div>
-      <div>1홉 도달 거리(약)<b id="sD"></b></div>
+      <div>주 로브 고각<b id="sA"></b><span class="sub" id="sA2"></span></div>
+      <div>널 (상쇄 각도)<b id="sN"></b><span class="sub" id="sN2"></span></div>
+      <div>1홉 도달 거리 (−3 dB 범위)<b id="sD"></b><span class="sub">F2층 300 km 기준</span></div>
     </div>
     <div style="overflow-x:auto"><table id="tbl"><thead><tr><th>밴드</th><th>주파수</th><th>λ</th><th>h/λ</th><th>주 로브</th><th>성격</th></tr></thead><tbody></tbody></table></div>
     <p class="note">1홉 거리와 NVIS 조건은 바로 아래 그림에서 확인할 수 있습니다.</p>
+    <p class="note">대지 상수: 바닷물 εr 80 · 5 S/m, 보통 대지 εr 13 · 5 mS/m, 건조한 땅 · 도심 εr 5 · 1 mS/m. 실제 대지를 고르면 점선으로 완전 도체일 때의 패턴을 함께 보여 줍니다. 옅게 칠한 부채꼴은 주 로브의 −3 dB 범위입니다.</p>
   </div>
 </section>
 
@@ -348,6 +378,21 @@ details.adv input[type=range]{margin-top:6px}
   <div class="eyebrow">전류와 방위</div>
   <h2>와이어 위 전류와 위에서 본 패턴</h2>
   <div class="fig" style="display:flex;flex-direction:column;gap:14px">
+    <div class="antbox">
+      <div class="antbox-h">내 안테나</div>
+      <div class="controls">
+        <div class="ctl" style="flex-basis:100%"><span class="clabel">와이어 기준 <span class="sub">어느 밴드에 맞춰 자른 와이어인가</span></span>
+          <div class="bands" id="wireSel">
+            <input type="radio" name="wire" id="ws80" value="3.55"><label for="ws80">80m용</label>
+            <input type="radio" name="wire" id="ws40" value="7.1" checked><label for="ws40">40m용</label>
+            <input type="radio" name="wire" id="ws20" value="14.2"><label for="ws20">20m용</label>
+            <input type="radio" name="wire" id="wsL" value="0"><label for="wsL">λ로 직접</label>
+          </div>
+        </div>
+        <div class="ctl" style="flex-basis:100%"><span class="clabel">운용 밴드 <span class="sub">높이 탭 계산기와 연동</span></span><div class="bands" id="opSel"></div></div>
+      </div>
+      <p class="note" id="antHint"></p>
+    </div>
     <div class="controls">
       <div class="ctl" style="flex-basis:100%"><span class="clabel">급전 방식</span>
         <div class="bands" id="feedSel">
@@ -359,9 +404,10 @@ details.adv input[type=range]{margin-top:6px}
         <div class="bands" id="lenSel"></div>
         <details class="adv"><summary>길이 직접 조절</summary><input type="range" id="wL" min="0.5" max="3" step="0.25" value="1" aria-label="와이어 길이 직접 조절"></details>
       </div>
-      <div class="ctl"><label for="wE">보는 고각</label><output id="wEo"></output><input type="range" id="wE" min="0" max="60" step="1" value="15"></div>
-      <div class="ctl"><label for="wT">진행파 성분 (방사 감쇠)</label><output id="wTo"></output><input type="range" id="wT" min="0" max="50" step="5" value="0"></div>
+      <div class="ctl"><label for="wE">보는 고각 <span class="sub" id="wEsrc"></span></label><output id="wEo"></output><input type="range" id="wE" min="0" max="90" step="1" value="15"></div>
+      <div class="ctl"><label for="wT">진행파 성분 (방사 감쇠)</label><output id="wTo"></output><input type="range" id="wT" min="0" max="50" step="5" value="0"><span class="sub">끝에서 돌아오는 파가 얼마나 약해지는가 · 실제 와이어는 대략 10~30%</span></div>
     </div>
+    <div class="btns"><button type="button" id="elSync" class="twoline"><span class="bt">자동 고각으로 되돌리기</span><span class="bs" id="elSyncSub">높이 탭 계산기의 밴드·지상고·대지로 구한 주 로브 고각을 "보는 고각"에 넣습니다</span></button></div>
     <div class="btns" aria-label="EFHW 프리셋">
       <span class="clabel" style="align-self:center">40m용 EFHW를</span>
       <button type="button" data-l="0.5">40m에서 (0.5λ)</button>
@@ -369,18 +415,20 @@ details.adv input[type=range]{margin-top:6px}
       <button type="button" data-l="1.5">15m에서 (1.5λ)</button>
       <button type="button" data-l="2">10m에서 (2λ)</button>
     </div>
+    <div class="antsum" data-sum></div>
     <svg id="curSvg" viewBox="0 0 680 170" role="img" aria-label="와이어 위 전류 분포와 위상"></svg>
     <div class="azgrid">
       <svg id="azSvg" viewBox="0 0 380 380" role="img" aria-label="위에서 내려다본 방위 패턴"></svg>
       <div class="stats stack">
         <div>지향성 (자유공간)<b id="lD"></b><span id="lD2" class="sub"></span></div>
         <div>가장 센 방향<b id="lMax"></b><span class="sub">와이어 축 기준 (0° = 오른쪽 끝)</span></div>
+        <div>최대 대비 −3 dB 이내 방향<b id="lDir"></b><span class="sub" id="lDir2"></span></div>
         <div>정면(90°) 세기<b id="lBs"></b></div>
         <div>급전점<b id="lFeed"></b><span id="lFeed2" class="sub"></span></div>
         <div>먼 끝 쪽 대 급전 쪽<b id="lFB"></b><span class="sub" id="lFBs"></span></div>
       </div>
     </div>
-    <p class="note">방위 패턴은 위에서 내려다본 그림으로, 선택한 고각에서 자른 단면입니다. 대지 위에서는 고각 0°의 신호가 0이라 기본값을 15°로 두었습니다. 그림 크기는 단면마다 가장 센 방향을 기준으로 맞췄습니다.</p>
+    <p class="note">방위 패턴은 위에서 내려다본 그림으로, 선택한 고각에서 자른 단면입니다. 대지 위에서는 고각 0°의 신호가 0이라 기본값을 15°로 두었습니다. 고각이 높을수록 방위 패턴이 둥글어져서 방향의 영향이 줄어듭니다. 그림 크기는 단면마다 가장 센 방향을 기준으로 맞췄습니다.</p>
     <p class="note"><b>진행파 성분</b>: 0%는 끝에서 전부 반사되는 이상적인 정재파입니다. 실제 와이어는 지나가며 에너지를 방사하므로 돌아오는 파가 약해집니다. 값을 올리면 전류가 0까지 떨어지지 않고, 먼 끝 쪽 로브가 커지며, 널이 조금 메워집니다. 실제 값은 와이어 길이, 높이, 주변 환경에 따라 다르며 대략 10~30% 범위를 생각하면 됩니다.</p>
     <p class="note">실제 EFHW에서 정면 널을 더 크게 메우는 건 동축 외피와 카운터포이즈의 방사인데, 이 모델에는 들어 있지 않습니다.</p>
   </div>
@@ -392,7 +440,13 @@ details.adv input[type=range]{margin-top:6px}
   <p><b>중앙 급전 1λ</b>는 양쪽 다리가 각각 반 파장이라 두 다리의 전류가 같은 위상입니다. 그래서 로브가 갈라지지 않고 정면이 더 날카로워집니다(반파장 대비 약 +1.7 dB). 대신 급전점이 전류 최소점이라 임피던스가 수천 Ω으로 높습니다.</p>
   <p><b>끝 급전 1λ</b>는 반 파장 구간 두 개가 반대 위상입니다. 정면에서는 서로 지워져 널이 되고, 와이어 축에서 약 54° 기울어진 방향으로 로브 4개가 섭니다. 40m용 EFHW를 20m에서 쓰는 경우가 바로 이것입니다.</p>
   <p>실제로는 진행파 성분과 동축 외피 방사 때문에 널이 완전히 파이지 않고, 먼 끝 쪽 로브가 조금 더 커집니다.</p>
-  <div class="fig">
+  <div class="fig" style="display:flex;flex-direction:column;gap:16px">
+    <div class="cmp1">
+      <figure class="cmpc"><figcaption><span class="dot c"></span>중앙 급전 1λ</figcaption><svg id="cmpCurC" viewBox="0 0 300 70" role="img" aria-label="중앙 급전 1파장 전류 분포"></svg><svg id="cmpAzC" viewBox="0 0 300 300" role="img" aria-label="중앙 급전 1파장 방위 패턴"></svg><p class="cmpst" id="cmpStC"></p></figure>
+      <figure class="cmpc"><figcaption><span class="dot e"></span>끝 급전 1λ (40m EFHW를 20m에서)</figcaption><svg id="cmpCurE" viewBox="0 0 300 70" role="img" aria-label="끝 급전 1파장 전류 분포"></svg><svg id="cmpAzE" viewBox="0 0 300 300" role="img" aria-label="끝 급전 1파장 방위 패턴"></svg><p class="cmpst" id="cmpStE"></p></figure>
+    </div>
+    <p class="note">두 그림 모두 고각 10°에서 위로 내려다본 방위 패턴이고, 진행파 성분은 0%입니다. 위쪽 띠는 와이어 위 전류이며 주황은 +위상, 파랑은 −위상입니다.</p>
+    <h3 class="cmph">길이를 늘리면</h3>
     <div class="smgrid" id="smGrid"></div>
   </div>
   <p class="note">와이어가 1.25λ를 넘으면 중앙 급전도 로브가 갈라지기 시작합니다. 1.25λ 중앙 급전(확장 더블 제프)은 정면 지향성이 가장 큰 길이입니다.</p>
@@ -404,6 +458,7 @@ details.adv input[type=range]{margin-top:6px}
   <p>실제 패턴은 길이가 만드는 모양에 높이가 만드는 대지 반사가 곱해진 것입니다. 끌어서 돌려 보세요.</p>
   <p>긴 와이어의 로브는 와이어 축을 감싸는 원뿔 모양이라, 평면 그림의 로브 여러 개가 사실은 원뿔 하나의 단면이라는 것도 보입니다.</p>
   <div class="fig" style="display:flex;flex-direction:column;gap:14px">
+    <div class="antsum" data-sum></div>
     <div class="controls">
       <div class="ctl"><label for="g3H">지상고</label><output id="g3Ho"></output><input type="range" id="g3H" min="0.1" max="2" step="0.05" value="0.5"></div>
       <div class="ctl"><span class="clabel">보기</span>
@@ -414,11 +469,15 @@ details.adv input[type=range]{margin-top:6px}
       </div>
     </div>
     <div class="btns">
-      <button type="button" id="g3Sync" class="twoline"><span class="bt">내 안테나 높이 적용</span><span class="bs">높이 탭 계산기의 지상고를 파장 단위로 가져옵니다</span></button>
+      <button type="button" id="g3Sync" class="twoline"><span class="bt">내 안테나 적용</span><span class="bs">위 "내 안테나"의 와이어·운용 밴드와 높이 탭의 지상고·대지를 씁니다</span></button>
       <button type="button" id="g3Reset" class="twoline"><span class="bt">시점 초기화</span><span class="bs">처음 보던 각도로 되돌립니다</span></button>
     </div>
+    <div class="controls compact">
+      <div class="ctl"><span class="clabel">급전</span><div class="bands" id="feed3"></div></div>
+      <div class="ctl"><span class="clabel">와이어 길이</span><div class="bands" id="len3"></div></div>
+    </div>
     <canvas id="g3" aria-label="입체 방사 패턴. 끌어서 회전" role="img"></canvas>
-    <p class="note">급전 방식과 와이어 길이는 위 설정을 따릅니다. 색이 진할수록 센 방향이고, 가는 선이 와이어입니다.</p>
+    <p class="note">급전과 와이어 길이는 위 "전류와 방위"와 같은 설정이라, 어디서 바꿔도 함께 바뀝니다. 대지는 높이 탭 계산기에서 고른 것을 따릅니다. 색이 진할수록 센 방향이고, 가는 선이 와이어입니다.</p>
   </div>
 </section>
 
@@ -538,6 +597,21 @@ details.adv input[type=range]{margin-top:6px}
       <p class="gen" lang="en">Ground factor · Ground reflection factor</p>
       <p class="gshort">높이 때문에 생기는 고각 방향의 세기 변화입니다. 수평 안테나의 패턴에 이 값을 곱합니다.</p>
       <div class="formula">AF(θ) = |sin(2π · h/λ · sin θ)|</div>
+    </div>
+    <div class="gl" id="g-realground">
+      <h3>실제 대지 반사 계수</h3>
+      <p class="gen" lang="en">Fresnel reflection coefficient (horizontal polarization)</p>
+      <p class="gshort">실제 땅은 전파를 일부만 반사하고 위상도 정확히 180° 뒤집지 않습니다. 그래서 널이 메워지고 주 로브가 조금 낮아집니다.</p>
+      <div class="formula">Γ<sub>h</sub> = (sin ψ − √(ε<sub>c</sub> − cos²ψ)) ÷ (sin ψ + √(ε<sub>c</sub> − cos²ψ))<br>Γ<sub>v</sub> = (ε<sub>c</sub>·sin ψ − √(ε<sub>c</sub> − cos²ψ)) ÷ (ε<sub>c</sub>·sin ψ + √(ε<sub>c</sub> − cos²ψ))<br>ε<sub>c</sub> = ε<sub>r</sub> − j · 60 · σ · λ<br>수평 성분: |1 + Γ<sub>h</sub> · e<sup>−jδ</sup>| ÷ 2,　수직 성분: |1 − Γ<sub>v</sub> · e<sup>−jδ</sup>| ÷ 2<br>δ = 4π · (h/λ) · sin ψ</div>
+      <p class="gex">완전 도체는 Γ = −1이라 위의 대지 계수와 같아집니다. 예: 보통 대지, 7 MHz, 바로 위 방향이면 |Γ| ≈ 0.6, 위상 약 172°.</p>
+      <p class="gex">수평 와이어의 전파는 와이어 정면에서는 순수 수평편파이고, 와이어 끝 쪽으로 갈수록 수직 성분이 섞입니다. 비율은 수평 성분 sin φ, 수직 성분 sin(고각) · cos φ입니다(φ는 와이어 축에서 잰 방위각). 수직 성분은 브루스터 각(보통 대지에서 약 15° 안팎) 근처에서 거의 반사되지 않아, 실제 대지에서는 와이어 끝 방향 낮은 고각에 수직편파가 남습니다.</p>
+      <p class="gnote">가정: 평평하고 고른 대지. 높이 탭은 와이어 정면(수평 성분)만 계산하고, 입체 그림은 두 성분을 나눠 계산합니다.</p>
+    </div>
+    <div class="gl" id="g-3db">
+      <h3>−3 dB 범위</h3>
+      <p class="gen" lang="en">Half-power beamwidth</p>
+      <p class="gshort">주 로브에서 세기가 최대의 절반(−3 dB) 이상인 각도 범위입니다. 최대점 각도 하나보다 실제로 잘 나가는 범위를 더 잘 보여 줍니다.</p>
+      <p class="gex">예: 0.25λ 높이는 최대가 90°이지만 −3 dB 범위가 30°~90°로 넓습니다.</p>
     </div>
     <div class="gl" id="g-mainangle">
       <h3>주 로브 고각</h3>
@@ -680,6 +754,31 @@ const hPat=(H,t)=>Math.abs(Math.sin(2*Math.PI*H*Math.sin(t)));
 const vPat=t=>{const c=Math.cos(t);return c<1e-4?0:Math.abs(Math.cos(Math.PI/2*Math.sin(t))/c)};
 const mainAngle=H=>H<=0.25?90:deg(Math.asin(1/(4*H)));
 function nulls(H){const n=[];for(let k=1;k/(2*H)<=1+1e-9;k++)n.push(deg(Math.asin(Math.min(1,k/(2*H)))));return n}
+/* 실제 대지: 수평편파(TE) 반사 계수. εc = εr − j·60σλ */
+const GROUNDS={perfect:{n:'완전 도체'},sea:{n:'바닷물',er:80,sg:5},avg:{n:'보통 대지',er:13,sg:0.005},poor:{n:'건조한 땅 · 도심',er:5,sg:0.001}};
+let groundSel='perfect';
+function gammaH(psi,lam,g){const sp=Math.sin(psi),c2=Math.cos(psi)**2,zr=g.er-c2,zi=-60*g.sg*lam,m=Math.hypot(zr,zi),
+  sr=Math.sqrt((m+zr)/2),si=(zi<0?-1:1)*Math.sqrt(Math.max(0,(m-zr)/2)),nr=sp-sr,ni=-si,dr=sp+sr,di=si,dd=dr*dr+di*di;
+  return[(nr*dr+ni*di)/dd,(ni*dr-nr*di)/dd]}
+/* 수직편파(TM) 반사 계수: Γv = (εc·sinψ − √(εc − cos²ψ)) ÷ (εc·sinψ + √(εc − cos²ψ)). 완전 도체 +1, 스치는 각 −1 */
+function gammaV(psi,lam,g){const sp=Math.sin(psi),c2=Math.cos(psi)**2,ei=-60*g.sg*lam,zr=g.er-c2,zi=ei,m=Math.hypot(zr,zi),
+  sr=Math.sqrt((m+zr)/2),si=(zi<0?-1:1)*Math.sqrt(Math.max(0,(m-zr)/2)),ar=g.er*sp,ai=ei*sp,nr=ar-sr,ni=ai-si,dr=ar+sr,di=ai+si,dd=dr*dr+di*di;
+  return[(nr*dr+ni*di)/dd,(ni*dr-nr*di)/dd]}
+/* 수평 와이어의 성분별 대지 계수. 수평 성분: |1 + Γh·e^(−jδ)|/2, 수직 성분: |1 − Γv·e^(−jδ)|/2, δ = 4π·(h/λ)·sin ψ.
+   완전 도체에서는 둘 다 |sin(2π·h/λ·sin ψ)| 로 같다 */
+function groundPair(H,f,gk){const g=GROUNDS[gk||groundSel];if(!g.er){const h=t=>hPat(H,t);return{h,v:h}}const lam=299.79/f;
+  const ph=t=>-4*Math.PI*H*Math.sin(t);
+  return{h:t=>{const G=gammaH(t,lam,g),p=ph(t),c=Math.cos(p),s_=Math.sin(p);return Math.hypot(1+G[0]*c-G[1]*s_,G[0]*s_+G[1]*c)/2},
+         v:t=>{const G=gammaV(t,lam,g),p=ph(t),c=Math.cos(p),s_=Math.sin(p);return Math.hypot(1-(G[0]*c-G[1]*s_),-(G[0]*s_+G[1]*c))/2}}}
+function patFor(H,f,gk){const g=GROUNDS[gk||groundSel];if(!g.er)return t=>hPat(H,t);const lam=299.79/f;
+  return t=>{const G=gammaH(t,lam,g),ph=-4*Math.PI*H*Math.sin(t),c=Math.cos(ph),s_=Math.sin(ph);return Math.hypot(1+G[0]*c-G[1]*s_,G[0]*s_+G[1]*c)/2}}
+function analyze(fn){const N=1800,v=[];let mi=1;for(let i=1;i<=N;i++){v[i]=fn(rad(i*90/N));if(v[i]>v[mi])mi=i}
+  /* 크기가 거의 같은 로브가 여러 개면(0.1 dB 이내) 가장 낮은 각도의 로브를 주 로브로 */
+  const top=v[mi];for(let i=1;i<=N;i++){const pk=(i===1||v[i]>=v[i-1])&&(i===N||v[i]>v[i+1]);if(pk&&v[i]>=top*0.9886){mi=i;break}}
+  const mx=v[mi],th=mx*Math.SQRT1_2;let lo=mi,hi=mi;while(lo>1&&v[lo-1]>=th)lo--;while(hi<N&&v[hi+1]>=th)hi++;
+  const mins=[];for(let i=2;i<=N;i++){const nxt=i<N?v[i+1]:Infinity;if(v[i]<=v[i-1]&&v[i]<nxt&&v[i]<0.5*mx)mins.push([i*90/N,20*Math.log10(Math.max(v[i],1e-6)/mx)])}
+  return{main:mi*90/N,max:mx,lo:lo*90/N,hi:hi*90/N,mins}}
+function anaFor(H,f){return analyze(patFor(H,f))}
 function hopKm(b){const R=6371,h=300,B=rad(b);return 2*R*(Math.PI/2-B-Math.asin(R*Math.cos(B)/(R+h)))}
 function patPath(cx,cy,R,f){let d='';for(let i=0;i<=360;i++){const t=Math.PI*i/360,r=R*f(t);d+=(i?'L':'M')+(cx+r*Math.cos(t)).toFixed(1)+' '+(cy-r*Math.sin(t)).toFixed(1)}return d+'Z'}
 function maxUp(f){let m=0.01;for(let i=0;i<=180;i++){const t=Math.PI*i/360;m=Math.max(m,f(t)*Math.sin(t))}return m}
@@ -691,13 +790,19 @@ function dipoleScene(svg,H,o){
   svg.innerHTML='';const{W,Ht}=o;svg.setAttribute('viewBox',`0 0 ${W} ${Ht}`);
   const gy=Ht-26;ground(svg,W,gy,Ht);
   let post=H*o.pxPerL, capped=false;if(post>o.maxPost){post=o.maxPost;capped=true}
-  const cx=W/2, ay=gy-post, f=t=>hPat(H,t);
+  const cx=W/2, ay=gy-post, f=o.pat||(t=>hPat(H,t));
   const R=Math.min(o.R,(ay-8)/maxUp(f));
   if(o.guides)guides(svg,cx,ay,R*1.02,[15,30,45,60,90]);
+  if(o.ana){const A=o.ana,rr=R*Math.max(A.max,0.3)*1.12,a1=rad(A.lo),a2=rad(A.hi),
+      p1=[cx+rr*Math.cos(a1),ay-rr*Math.sin(a1)],p2=[cx+rr*Math.cos(a2),ay-rr*Math.sin(a2)];
+    E('path',{d:`M${cx} ${ay}L${p1[0]} ${p1[1]}A${rr} ${rr} 0 0 0 ${p2[0]} ${p2[1]}Z`,fill:'var(--lobe)','fill-opacity':.07,stroke:'none'},svg);
+    E('path',{d:`M${p1[0]} ${p1[1]}A${rr} ${rr} 0 0 0 ${p2[0]} ${p2[1]}`,fill:'none',stroke:'var(--lobe)','stroke-width':3,'stroke-opacity':.55,'stroke-linecap':'round'},svg);
+    const am=rad((A.lo+A.hi)/2);T('−3 dB',{x:cx+(rr+24)*Math.cos(am),y:ay-(rr+24)*Math.sin(am),class:'gtxt','text-anchor':Math.cos(am)>0.2?'start':'middle',style:'fill:var(--lobe)'},svg)}
+  if(o.ref)E('path',{d:patPath(cx,ay,R,o.ref),class:'lobe alt'},svg);
   E('path',{d:patPath(cx,ay,R,f),class:'lobe'},svg);
   if(o.marks){
-    nulls(H).forEach(a=>{const t=rad(a);E('line',{x1:cx,y1:ay,x2:cx+R*1.05*Math.cos(t),y2:ay-R*1.05*Math.sin(t),class:'nullmark'},svg)});
-    const a=mainAngle(H),t=rad(a);E('line',{x1:cx,y1:ay,x2:cx+R*1.1*Math.cos(t),y2:ay-R*1.1*Math.sin(t),class:'mark'},svg);
+    (o.ana?o.ana.mins.map(m=>m[0]):nulls(H)).forEach(a=>{const t=rad(a);E('line',{x1:cx,y1:ay,x2:cx+R*1.05*Math.cos(t),y2:ay-R*1.05*Math.sin(t),class:'nullmark'},svg)});
+    const a=o.ana?o.ana.main:mainAngle(H),t=rad(a);E('line',{x1:cx,y1:ay,x2:cx+R*1.1*Math.cos(t),y2:ay-R*1.1*Math.sin(t),class:'mark'},svg);
     T(a.toFixed(1)+'°',{x:cx+R*1.1*Math.cos(t)+4,y:ay-R*1.1*Math.sin(t)-4,class:'mtxt'},svg);
   }
   const px=Math.min(W*0.3,o.span||W*0.3);
@@ -761,21 +866,29 @@ const BANDS=[['160m',1.85],['80m',3.55],['40m',7.1],['30m',10.12],['20m',14.2],[
 const bandsEl=document.getElementById('bands');let sel=4;
 BANDS.forEach(([n],i)=>{const id='b'+i;const inp=document.createElement('input');inp.type='radio';inp.name='band';inp.id=id;inp.checked=i===sel;inp.addEventListener('change',()=>{sel=i;update()});const l=document.createElement('label');l.htmlFor=id;l.textContent=n;bandsEl.append(inp,l)});
 const mH=document.getElementById('mH'),big=document.getElementById('big');
-function kind(H){return H<0.15?'NVIS (효율 손해)':H<0.3?'NVIS · 근거리':H<0.6?'중거리':'DX'}
+function kind(H,a){a=a===undefined?mainAngle(H):a;return(a>=60?'NVIS · 근거리':a>=25?'중거리':'DX')+(H<0.15?' (효율 손해)':'')}
 function update(){
   const m=+mH.value;document.getElementById('mHo').textContent=m.toFixed(1)+' m ('+(m*3.281).toFixed(0)+' ft)';
   const f=BANDS[sel][1],lam=299.79/f,H=m/lam;
-  dipoleScene(big,H,{W:680,Ht:340,pxPerL:150,maxPost:220,R:170,guides:true,marks:true,span:150});
-  const a=mainAngle(H),ns=nulls(H);
+  const real=groundSel!=='perfect',pat=patFor(H,f),A=analyze(pat);
+  dipoleScene(big,H,{W:680,Ht:340,pxPerL:150,maxPost:220,R:170,guides:true,marks:true,span:150,pat,ana:A,ref:real?(t=>hPat(H,t)):null});
+  const rel=20*Math.log10(A.max);
   document.getElementById('sH').textContent=H.toFixed(2)+' λ';
-  document.getElementById('sA').textContent=a.toFixed(1)+'°'+(H<0.25?' ('+(20*Math.log10(Math.sin(2*Math.PI*H))).toFixed(1)+' dB)':'');
-  document.getElementById('sN').textContent=ns.length?ns.map(x=>x.toFixed(0)+'°').join(', '):'수평선만';
-  document.getElementById('sD').textContent=a>=60?'NVIS 범위':Math.round(hopKm(a)).toLocaleString()+' km';
+  document.getElementById('sA').textContent=A.main.toFixed(1)+'°';
+  document.getElementById('sA2').textContent='−3 dB 범위 '+A.lo.toFixed(0)+'°~'+A.hi.toFixed(0)+'°'+(rel<-0.05?' · 이상적 최대 대비 '+rel.toFixed(1).replace('-','−')+' dB':'');
+  document.getElementById('sN').textContent=A.mins.length?A.mins.map(m=>m[0].toFixed(0)+'°'+(real&&m[1]>-40?' ('+m[1].toFixed(0)+' dB)':'')).join(', '):'수평선만';
+  document.getElementById('sN2').textContent=real&&A.mins.length?'실제 대지에서는 널이 완전히 0이 되지 않습니다':'';
+  const dLo=Math.round(hopKm(Math.max(A.lo,0.5))).toLocaleString();
+  document.getElementById('sD').textContent=A.hi>=60?'NVIS ~ '+dLo+' km':Math.round(hopKm(A.hi)).toLocaleString()+' ~ '+dLo+' km';
   const tb=document.querySelector('#tbl tbody');tb.innerHTML='';
   BANDS.forEach(([n,fr],i)=>{const l=299.79/fr,h=m/l,tr=document.createElement('tr');if(i===sel)tr.className='on';
-    tr.innerHTML=`<td>${n}</td><td>${fr.toFixed(2)} MHz</td><td>${l.toFixed(1)} m</td><td>${h.toFixed(2)}</td><td>${mainAngle(h).toFixed(0)}°</td><td>${kind(h)}</td>`;tb.appendChild(tr)});
+    const ma=anaFor(h,fr).main;tr.innerHTML=`<td>${n}</td><td>${fr.toFixed(2)} MHz</td><td>${l.toFixed(1)} m</td><td>${h.toFixed(2)}</td><td>${ma.toFixed(0)}°</td><td>${kind(h,ma)}</td>`;tb.appendChild(tr)});
+  if(window.__lenSync)window.__lenSync();
 }
-mH.addEventListener('input',update);update();
+mH.addEventListener('input',update);
+document.querySelectorAll('input[name=ground]').forEach(r=>r.addEventListener('change',()=>{groundSel=r.value;const g=GROUNDS[groundSel];document.getElementById('gdesc').textContent=g.er?'· εr '+g.er+', σ '+(g.sg>=1?g.sg+' S/m':(g.sg*1000)+' mS/m'):'· 반사 손실 없음 (이론값)';update()}));
+document.getElementById('gdesc').textContent='· 반사 손실 없음 (이론값)';
+update();
 
 /* 4. 수직 비교 */
 const vert=document.getElementById('vert');
@@ -861,7 +974,7 @@ const vert=document.getElementById('vert');
   iO.addEventListener('input',()=>{document.querySelectorAll('input[name=itime]').forEach(r=>r.checked=Math.abs(+r.value-+iO.value)<0.05);tagUpd();draw()});
   iB.addEventListener('input',draw);
   document.getElementById('pSync').onclick=()=>{const [n,f]=BANDS[sel],H=(+mH.value)/(299.79/f),k=IB.findIndex(b=>b[0]===n);
-    if(k>=0)document.getElementById('ib'+k).checked=true;iF.value=f;iB.value=Math.max(3,Math.round(mainAngle(H)));draw()};
+    if(k>=0)document.getElementById('ib'+k).checked=true;iF.value=f;iB.value=Math.max(3,Math.round(anaFor(H,f).main));draw()};
   draw();
 })();
 
@@ -893,7 +1006,7 @@ const vert=document.getElementById('vert');
 /* ===== 길이 · 방위 ===== */
 (function(){
   const K=2*Math.PI;
-  const st={feed:'center',L:1,el:15,tw:0,H:0.5,ground:true,yaw:-35,pitch:22};
+  const st={feed:'end',L:1,el:15,tw:0,H:0.5,ground:true,yaw:-35,pitch:22,wireF:7.1,elManual:false};
   const cache={};
   /* 전류 = 급전점에서 나가는 파 + 끝에서 반사돼 돌아오는 파.
      rho=1이면 순수 정재파, rho<1이면 방사로 에너지를 잃어 진행파 성분이 섞인다. */
@@ -925,7 +1038,10 @@ const vert=document.getElementById('vert');
     else E('circle',{cx,cy,r:R,class:'circ'},svg);
     const {r}=azCut(P,el);let d='';
     for(let a=0;a<=360;a++){const t=rad(a),x=cx+R*r[a]*Math.cos(t),y=cy-R*r[a]*Math.sin(t);d+=(a?'L':'M')+x.toFixed(1)+' '+y.toFixed(1)}
-    E('path',{d:d+'Z',class:'azl'},svg);
+    E('path',{d:d+'Z',class:'azl'+(o.feed==='end'?' end':'')},svg);
+    if(o.mark90){const v=r[90],ok=v>0.7,ttl=v<0.03?'널':ok?'최대':(20*Math.log10(v)).toFixed(0)+' dB';
+      E('line',{x1:cx,y1:cy,x2:cx,y2:cy-R-2,stroke:ok?'var(--ink)':'var(--null)','stroke-width':1.4,'stroke-dasharray':'4 3'},svg);
+      T('정면 '+ttl,{x:cx+6,y:cy-R+12,class:'lbl',style:'fill:'+(ok?'var(--ink)':'var(--null)')+';font-weight:700'},svg)}
     const wl=R*(o.wire||0.55);E('line',{x1:cx-wl,y1:cy,x2:cx+wl,y2:cy,stroke:'var(--ink)','stroke-width':o.grid?2:1.4},svg);
     const fx=o.feed==='end'?cx-wl:cx;E('circle',{cx:fx,cy,r:o.grid?4.5:3,fill:'var(--ink)'},svg);
     if(o.grid){
@@ -975,16 +1091,25 @@ const vert=document.getElementById('vert');
   }
 
   function updateMain(){
-    document.getElementById('wLo').textContent=st.L+' λ';
-    LENS.forEach((v,i)=>{document.getElementById('wl'+i).checked=Math.abs(v-st.L)<1e-9});
-    document.getElementById('wLex').textContent='· 20m 밴드(14.2 MHz)라면 와이어 약 '+(st.L*299.79/14.2).toFixed(1)+' m';document.getElementById('wEo').textContent=st.el+'°';
+    LENS.forEach((v,i)=>{const on=Math.abs(v-st.L)<=v*0.02;document.getElementById('wl'+i).checked=on;const c=document.getElementById('l3'+i);if(c)c.checked=on});
+    document.getElementById('wLo').textContent=fmtL(st.L)+' λ';
+    document.getElementById('wLex').textContent=st.wireF?'· '+wireName()+' 와이어 약 '+(299.79/st.wireF/2).toFixed(1)+' m':'· 20m 밴드(14.2 MHz)라면 와이어 약 '+(st.L*299.79/14.2).toFixed(1)+' m';
+    document.getElementById('wEo').textContent=st.el+'°';
+    {const b=document.getElementById('elSync'),auto=st.wireF&&!st.elManual;b.disabled=!!auto;
+      document.getElementById('elSyncSub').textContent=auto?'지금 자동으로 주 로브 고각을 따르는 중입니다':'높이 탭 계산기의 밴드·지상고·대지로 구한 주 로브 고각을 "보는 고각"에 넣습니다'}
+    document.getElementById(st.feed==='end'?'f3e':'f3c').checked=true;
+    renderSummary();
     const P=build(st.L,st.feed,st.tw);drawCurrent();
     const r=polar(document.getElementById('azSvg'),P,st.el,{size:380,grid:true,feed:st.feed});
-    let bi=0;for(let a=0;a<=180;a++)if(r[a]>r[bi])bi=a;
+    let bi=0;for(let a=0;a<=180;a++)if(r[a]>r[bi]*1.002)bi=a;
     let fr=0,bk=0;for(let a=0;a<90;a++)fr=Math.max(fr,r[a]);for(let a=91;a<=180;a++)bk=Math.max(bk,r[a]);
     document.getElementById('lD').textContent=P.dBi.toFixed(2)+' dBi';
     const dd=P.dBi-2.15;document.getElementById('lD2').textContent='반파장 대비 '+(dd>=0?'+':'')+dd.toFixed(1)+' dB';
     document.getElementById('lMax').textContent=bi+'°';
+    let mn=1,cov=0;for(let a=0;a<360;a++){mn=Math.min(mn,r[a]);if(r[a]>=Math.SQRT1_2)cov++}
+    const pc=Math.round(cov/3.6),dr=-20*Math.log10(Math.max(mn,1e-6));
+    document.getElementById('lDir').textContent='전체 방향의 '+pc+'%';
+    document.getElementById('lDir2').textContent=(pc>=75?'거의 둥근 모양 · 방향 영향 작음':pc>=40?'방향 영향 있음':'방향 영향 큼 · 와이어 방향이 중요')+' · 가장 약한 방향 '+(dr>=30?'−30 dB 이하':dr<0.05?'0 dB':'−'+dr.toFixed(1)+' dB');
     const bs=r[90];document.getElementById('lBs').textContent=bs<0.01?'널 (−40 dB 이하)':(20*Math.log10(bs)).toFixed(1)+' dB';
     const fb=20*Math.log10(fr/Math.max(bk,1e-6)),fbEl=document.getElementById('lFB'),fbSub=document.getElementById('lFBs');
     if(st.feed==='center'){fbEl.textContent='대칭';fbSub.textContent='중앙 급전은 양쪽 다리가 같아 항상 0 dB'}
@@ -994,15 +1119,31 @@ const vert=document.getElementById('vert');
     drawSmall();draw3d();
   }
 
+  const CMP_EL=10;
+  function curStrip(svg,L,feed){
+    svg.innerHTML='';const x0=14,x1=286,y=34,A=24,N=200,X=u=>x0+(x1-x0)*u/L;
+    const I=u=>feed==='center'?Math.sin(K*(L/2-Math.abs(u-L/2))):Math.sin(K*u);
+    let pts=[],sg=0;const flush=()=>{if(pts.length>1&&sg){E('path',{d:'M'+X(pts[0][0])+' '+y+pts.map(p=>'L'+X(p[0]).toFixed(1)+' '+(y-A*p[1]).toFixed(1)).join('')+'L'+X(pts[pts.length-1][0])+' '+y+'Z',class:sg>0?'cur-pos':'cur-neg'},svg)}};
+    for(let k=0;k<=N;k++){const u=k/N*L,v=I(u),sn=v>1e-6?1:v<-1e-6?-1:0;if(sn&&sn!==sg){flush();pts=pts.length?[pts[pts.length-1]]:[];sg=sn}pts.push([u,v])}flush();
+    E('line',{x1:x0,y1:y,x2:x1,y2:y,stroke:'var(--ink)','stroke-width':1.6},svg);
+    const fx=feed==='end'?x0:(x0+x1)/2;E('circle',{cx:fx,cy:y,r:4,fill:'var(--ink)'},svg);
+    T(feed==='end'?'급전점(끝)':'급전점',{x:fx,y:y+A+12,class:'gtxt','text-anchor':feed==='end'?'start':'middle'},svg);
+  }
+  function cmpStat(r,P){let bi=0;for(let a=0;a<=180;a++)if(r[a]>r[bi]*1.002)bi=a;
+    return '가장 센 방향 '+bi+'° · 지향성 '+P.dBi.toFixed(2)+' dBi'}
   function drawSmall(){
+    [['center','C'],['end','E']].forEach(([f,k])=>{const P=build(1,f,0);curStrip(document.getElementById('cmpCur'+k),1,f);
+      const r=polar(document.getElementById('cmpAz'+k),P,CMP_EL,{size:300,grid:true,feed:f,mark90:true,pad:30});
+      document.getElementById('cmpSt'+k).textContent=cmpStat(r,P)});
     const g=document.getElementById('smGrid');g.innerHTML='';
     const Ls=[0.5,1,1.5,2];g.appendChild(document.createElement('span'));
-    Ls.forEach(L=>{const h=document.createElement('span');h.className='ch';h.textContent=L+'λ';g.appendChild(h)});
+    Ls.forEach(L=>{const h=document.createElement('span');h.className='ch'+(L===1?' hl':'');h.textContent=L+'λ';g.appendChild(h)});
     [['center','중앙 급전'],['end','끝 급전']].forEach(([f,n])=>{
-      const rh=document.createElement('span');rh.className='rh';rh.textContent=n;g.appendChild(rh);
-      Ls.forEach(L=>{const s=E('svg',{viewBox:'0 0 150 150',role:'img','aria-label':n+' '+L+' 파장 방위 패턴'});polar(s,build(L,f,st.tw),st.el,{size:150,pad:8,feed:f,wire:0.5});g.appendChild(s)});
+      const rh=document.createElement('span');rh.className='rh';rh.innerHTML='<span class="dot '+(f==='end'?'e':'c')+'"></span>'+n;g.appendChild(rh);
+      Ls.forEach(L=>{const s=E('svg',{viewBox:'0 0 150 150',role:'img','aria-label':n+' '+L+' 파장 방위 패턴'});if(L===1)s.classList.add('hl');polar(s,build(L,f,0),CMP_EL,{size:150,pad:8,feed:f,wire:0.5});g.appendChild(s)});
     });
   }
+
 
   /* ===== 3D ===== */
   const cv=document.getElementById('g3'),ctx=cv.getContext('2d');
@@ -1014,10 +1155,13 @@ const vert=document.getElementById('vert');
     if(cv.width!==Math.round(w*dpr)){cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr)}
     ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
     document.getElementById('g3Ho').textContent=st.H.toFixed(2)+' λ';
-    const P=build(st.L,st.feed,st.tw),G=st.ground,lob=hex('--lobe'),pan=hex('--panel'),ink=hex('--ink'),ear=hex('--earth');
+    const gpair=groundPair(st.H,BANDS[sel][1]),P=build(st.L,st.feed,st.tw),G=st.ground,lob=hex(st.feed==='end'?'--efc':'--lobe'),pan=hex('--panel'),ink=hex('--ink'),ear=hex('--earth');
     const dE=3,dA=5,e0=G?0:-90,ne=Math.round((90-e0)/dE),na=360/dA;
     const pts=[];let mx=1e-9;
-    for(let i=0;i<=ne;i++){const el=e0+i*dE,row=[];for(let j=0;j<=na;j++){const az=j*dA;let r=P.at(psiOf(az,el));if(G)r*=Math.abs(Math.sin(K*st.H*Math.sin(rad(el))));if(r>mx)mx=r;row.push([el,az,r])}pts.push(row)}
+    for(let i=0;i<=ne;i++){const el=e0+i*dE,row=[];for(let j=0;j<=na;j++){const az=j*dA;let r=P.at(psiOf(az,el));
+        if(G){const ps=rad(psiOf(az,el)),sp=Math.sin(ps);
+          if(sp<1e-4)r=0;else{const te=Math.abs(Math.sin(rad(az)))/sp,tm=Math.abs(Math.sin(rad(el))*Math.cos(rad(az)))/sp,e_=rad(Math.max(el,0.01));
+            r*=Math.hypot(te*gpair.h(e_),tm*gpair.v(e_))}}if(r>mx)mx=r;row.push([el,az,r])}pts.push(row)}
     const cy_=Math.cos(rad(st.yaw)),sy=Math.sin(rad(st.yaw)),cp=Math.cos(rad(st.pitch)),sp=Math.sin(rad(st.pitch));
     const sc=Math.min(w,h)*(G?0.62:0.44),ox=w/2,oy=G?h*0.74:h*0.52;
     const W=(el,az,r)=>{const ce=Math.cos(rad(el));return[r*ce*Math.cos(rad(az)),r*ce*Math.sin(rad(az)),r*Math.sin(rad(el))]};
@@ -1047,7 +1191,7 @@ const vert=document.getElementById('vert');
     ctx.fillStyle=`rgb(${ink})`;ctx.beginPath();ctx.arc(ff[0],ff[1],3.5,0,7);ctx.fill();
     ctx.font='500 11px '+getComputedStyle(document.body).fontFamily;ctx.fillStyle=`rgba(${ink},0.7)`;
     const tip=view([0.5,0,0]);ctx.fillText('와이어',tip[0]+6,tip[1]+4);
-    ctx.fillText(G?'지상고 '+st.H.toFixed(2)+'λ · 대지 반사 포함':'자유공간',10,18);
+    ctx.fillText(G?'지상고 '+st.H.toFixed(2)+'λ · '+GROUNDS[groundSel].n:'자유공간 (대지 없음)',10,18);
   }
   let drag=null;
   cv.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,yaw:st.yaw,pitch:st.pitch};try{cv.setPointerCapture(e.pointerId)}catch(_){}} );
@@ -1058,26 +1202,71 @@ const vert=document.getElementById('vert');
   const wL=document.getElementById('wL'),wE=document.getElementById('wE');
   const LENS=[0.5,1,1.25,1.5,2,3],lenEl=document.getElementById('lenSel');
   LENS.forEach((v,i)=>{const inp=document.createElement('input');inp.type='radio';inp.name='wlen';inp.id='wl'+i;inp.value=v;
-    inp.addEventListener('change',()=>{st.L=v;wL.value=v;updateMain()});const l=document.createElement('label');l.htmlFor=inp.id;l.textContent=v+'λ';
+    inp.addEventListener('change',()=>{toLambda();st.L=v;wL.value=v;updateMain()});const l=document.createElement('label');l.htmlFor=inp.id;l.textContent=v+'λ';
     if(v===1.25)l.title='중앙 급전에서 정면 지향성이 가장 큰 길이';lenEl.append(inp,l)});
   function setFeed(f){st.feed=f;document.getElementById(f==='end'?'fdE':'fdC').checked=true;
-    wL.step=f==='end'?0.5:0.25;if(f==='end'){st.L=Math.max(0.5,Math.round(st.L*2)/2);wL.value=st.L}
-    LENS.forEach((v,i)=>{const d=f==='end'&&Math.abs(v*2-Math.round(v*2))>1e-9;const el=document.getElementById('wl'+i);el.disabled=d;
+    wL.step=f==='end'?0.5:0.25;if(f==='end'&&!st.wireF){st.L=Math.max(0.5,Math.round(st.L*2)/2);wL.value=st.L}
+    LENS.forEach((v,i)=>{const d=f==='end'&&Math.abs(v*2-Math.round(v*2))>1e-9;const el=document.getElementById('wl'+i);el.disabled=d;const c3=document.getElementById('l3'+i);if(c3)c3.disabled=d;
       el.nextSibling.title=d?'끝 급전(EFHW)은 반파장 배수에서만 공진합니다':(v===1.25?'중앙 급전에서 정면 지향성이 가장 큰 길이':'')})}
   document.querySelectorAll('input[name=feed]').forEach(i=>i.addEventListener('change',()=>{setFeed(i.value);updateMain()}));
-  wL.addEventListener('input',()=>{st.L=+wL.value;updateMain()});
-  wE.addEventListener('input',()=>{st.el=+wE.value;updateMain()});
+  wL.addEventListener('input',()=>{toLambda();st.L=+wL.value;updateMain()});
+  wE.addEventListener('input',()=>{st.el=+wE.value;st.elManual=true;document.getElementById('wEsrc').textContent='· 직접 설정';updateMain()});
+  document.getElementById('elSync').onclick=()=>{st.elManual=false;const [n,f]=BANDS[sel],m=+mH.value,H=m/(299.79/f),a=Math.round(anaFor(H,f).main);
+    st.el=Math.max(0,Math.min(90,a));wE.value=st.el;
+    document.getElementById('wEsrc').textContent='· '+n+' · '+m.toFixed(1)+' m · '+GROUNDS[groundSel].n+'의 주 로브';updateMain()};
   const wT=document.getElementById('wT');wT.addEventListener('input',()=>{st.tw=+wT.value/100;updateMain()});
-  document.querySelectorAll('[data-l]').forEach(b=>b.addEventListener('click',()=>{setFeed('end');st.L=+b.dataset.l;wL.value=st.L;updateMain()}));
+  document.querySelectorAll('[data-l]').forEach(b=>b.addEventListener('click',()=>{const L=+b.dataset.l,bi={0.5:2,1:4,1.5:6,2:8}[L];
+    st.wireF=7.1;document.getElementById('ws40').checked=true;setFeed('end');setOp(bi)}));
   const g3H=document.getElementById('g3H');
-  g3H.addEventListener('input',()=>{st.H=+g3H.value;req()});
+  g3H.addEventListener('input',()=>{toLambda();st.H=+g3H.value;renderSummary();req()});
   document.querySelectorAll('input[name=g3m]').forEach(i=>i.addEventListener('change',()=>{st.ground=i.value==='ground';if(st.ground&&st.pitch<-5)st.pitch=22;req()}));
-  document.getElementById('g3Sync').onclick=()=>{const f=BANDS[sel][1],H=(+mH.value)/(299.79/f);st.H=Math.min(2,Math.max(0.1,Math.round(H*20)/20));g3H.value=st.H;req()};
+  document.getElementById('g3Sync').onclick=()=>{if(!st.wireF){st.wireF=+(document.querySelector('input[name=wire]:not([value="0"]):checked')||document.getElementById('ws40')).value;
+      document.querySelector('input[name=wire][value="'+st.wireF+'"]').checked=true}st.elManual=false;sync()};
   document.getElementById('g3Reset').onclick=()=>{st.yaw=-35;st.pitch=22;req()};
   window.addEventListener('resize',req);window.addEventListener('tabshow',req);
   try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',req)}catch(e){}
   new MutationObserver(req).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
-  updateMain();
+  /* ----- 내 안테나: 와이어 기준 밴드 + 운용 밴드 ----- */
+  function fmtL(L){return (Math.round(L*100)/100).toString()}
+  function wireName(){return({3.55:'80m용',7.1:'40m용',14.2:'20m용'})[st.wireF]||''}
+  function toLambda(){if(st.wireF){st.wireF=0;document.getElementById('wsL').checked=true}}
+  const opEl=document.getElementById('opSel');
+  BANDS.forEach(([n],i)=>{const inp=document.createElement('input');inp.type='radio';inp.name='opband';inp.id='op'+i;
+    inp.addEventListener('change',()=>setOp(i));const l=document.createElement('label');l.htmlFor=inp.id;l.textContent=n;opEl.append(inp,l)});
+  function setOp(i){sel=i;document.getElementById('b'+i).checked=true;update()}   /* update()가 __lenSync를 부른다 */
+  function sync(){
+    const [n,f]=BANDS[sel],m=+mH.value,lam=299.79/f;document.getElementById('op'+sel).checked=true;
+    if(st.wireF){st.L=f/(2*st.wireF);wL.value=Math.min(3,st.L);st.H=m/lam;g3H.value=Math.min(2,Math.max(0.1,st.H))}
+    if(st.wireF&&!st.elManual){st.el=Math.max(0,Math.min(90,Math.round(anaFor(m/lam,f).main)));wE.value=st.el;
+      document.getElementById('wEsrc').textContent='· 주 로브 고각 (자동)'}
+    document.getElementById('antHint').innerHTML=st.wireF?'지상고 <b>'+m.toFixed(1)+' m</b> · 대지 <b>'+GROUNDS[groundSel].n+'</b>는 높이 탭 계산기 값을 씁니다. <a href="#height" class="gohe">높이 탭에서 바꾸기</a>'
+      :'λ로 직접 정하는 중입니다. 와이어 길이와 지상고를 아래에서 파장 단위로 바꿀 수 있고, 밴드와는 연결되지 않습니다.';
+    updateMain();req();
+  }
+  window.__lenSync=sync;
+  document.querySelectorAll('input[name=wire]').forEach(r=>r.addEventListener('change',()=>{st.wireF=+r.value;st.elManual=false;
+    if(!st.wireF){st.L=Math.round(st.L*4)/4||1;wL.value=st.L}sync()}));
+  function renderSummary(){
+    const [n,f]=BANDS[sel],res=Math.abs(st.L*2-Math.round(st.L*2))<0.03;
+    const feed=st.feed==='end'?'끝 급전 (EFHW)':'중앙 급전 (다이폴)';
+    let l1=feed+' · 와이어 '+fmtL(st.L)+'λ · 지상고 '+st.H.toFixed(2)+'λ · '+GROUNDS[groundSel].n+' · 보는 고각 '+st.el+'°';
+    let l2=st.wireF?wireName()+' 와이어(약 '+(299.79/st.wireF/2).toFixed(1)+' m)를 '+n+' 밴드('+f.toFixed(2)+' MHz)에서 · 지상고 '+(+mH.value).toFixed(1)+' m'
+      :'λ 단위로 직접 설정 중 · 실제 밴드와 연결하지 않음';
+    let warn=st.wireF&&st.feed==='end'&&!res?'이 밴드에서는 끝 급전 와이어가 공진하지 않습니다 (와이어 '+fmtL(st.L)+'λ). 실제로는 튜너 없이 정합이 어렵습니다.':'';
+    document.querySelectorAll('[data-sum]').forEach(d=>{d.innerHTML='<div class="as1"></div><div class="as2"></div>'+(warn?'<div class="as3"></div>':'');
+      d.querySelector('.as1').textContent=l1;d.querySelector('.as2').textContent=l2;if(warn)d.querySelector('.as3').textContent=warn});
+  }
+  /* 3D 쪽 간이 조작 */
+  const f3=document.getElementById('feed3');
+  [['f3c','center','중앙 급전'],['f3e','end','끝 급전']].forEach(([id,v,t])=>{const inp=document.createElement('input');inp.type='radio';inp.name='feed3';inp.id=id;inp.value=v;
+    inp.addEventListener('change',()=>{setFeed(v);updateMain()});const l=document.createElement('label');l.htmlFor=id;l.textContent=t;f3.append(inp,l)});
+  const l3=document.getElementById('len3');
+  LENS.forEach((v,i)=>{const inp=document.createElement('input');inp.type='radio';inp.name='len3';inp.id='l3'+i;
+    inp.addEventListener('change',()=>{toLambda();st.L=v;wL.value=v;updateMain()});const l=document.createElement('label');l.htmlFor=inp.id;l.textContent=v+'λ';l3.append(inp,l)});
+  document.addEventListener('click',e=>{const a=e.target.closest('.gohe');if(!a)return;e.preventDefault();window.__wapShow('height',true);
+    requestAnimationFrame(()=>window.__wapToEl(document.getElementById('mH').closest('.fig')))});
+  setFeed('end');
+  sync();
 })();
 
 /* ===== 용어 팝업 ===== */
@@ -1085,45 +1274,30 @@ const vert=document.getElementById('vert');
   const RULES=[['foF2','fof2'],['MUF','muf'],['1홉','hop'],['스킵존','skip'],['NVIS','nvis'],['D층','dlayer'],['F2층','f2'],
     ['거울상 안테나','mirror'],['경로차','pathdiff'],['고각','elev'],['방위','azim'],['로브','lobe'],['널(?!리)','null'],['파장','lambda'],
     ['편파','pol'],['SWR','swr'],['DX','dx'],['정재파','standing'],['진행파','standing'],['임피던스','impedance'],['EFHW','efhw'],['지향성','dbi']];
-  const SKIP='a,button,code,label,output,h1,h2,h3,.eyebrow,.tabs,.formula,svg';
-  function wrapScope(root){
-    const done=new Set();
-    root.querySelectorAll('p,li').forEach(el=>{
+  const SKIP='a,button,code,label,output,h1,h2,h3,.eyebrow,.tabs,.formula,svg,.cmpst,.antsum,#antHint';
+  /* 문장마다 가장 앞에 나오는 용어부터 감싸고, 남은 뒷부분을 이어서 검사한다. 용어마다 범위(root) 안에서 첫 등장 하나만 */
+  function wrapTerms(root,allow){
+    const have=new Set([...root.querySelectorAll('.term')].map(b=>b.dataset.t));
+    if(allow)RULES.forEach(([,k])=>{if(!allow.includes(k))have.add(k)});
+    const res=RULES.map(([pat,key])=>[new RegExp(pat),key]);
+    (root.matches('p,li')?[root]:root.querySelectorAll('p,li')).forEach(el=>{
       if(el.closest('#tab-terms')||el.closest(SKIP))return;
       const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
-      nodes.forEach(n=>{
-        if(n.parentElement.closest(SKIP))return;
-        for(const [pat,key] of RULES){
-          if(done.has(key))continue;
-          const m=new RegExp(pat).exec(n.nodeValue);if(!m)continue;
-          const after=n.splitText(m.index);after.splitText(m[0].length);
-          const b=document.createElement('button');b.type='button';b.className='term';b.dataset.t=key;b.textContent=m[0];
-          after.parentNode.replaceChild(b,after);done.add(key);return;
-        }
+      nodes.forEach(function go(n){
+        if(!n.parentElement||n.parentElement.closest(SKIP))return;
+        let best=null;
+        for(const [re,key] of res){if(have.has(key))continue;const m=re.exec(n.nodeValue);
+          if(m&&(!best||m.index<best.m.index||(m.index===best.m.index&&m[0].length>best.m[0].length)))best={m,key}}
+        if(!best)return;
+        const after=n.splitText(best.m.index),rest=after.splitText(best.m[0].length);
+        const b=document.createElement('button');b.type='button';b.className='term';b.dataset.t=best.key;b.textContent=best.m[0];
+        after.parentNode.replaceChild(b,after);have.add(best.key);go(rest);
       });
     });
   }
   /* 머리말은 고각·방위만, 각 탭은 용어별 첫 등장 하나에만 밑줄 */
-  const hdr=document.querySelector('header .lede');if(hdr)wrapScope2(hdr,['elev','azim']);
-  ['#tab-height','#tab-length'].forEach(sel=>{const r=document.querySelector(sel);if(r){wrapScope(r);wrapScope2(r)}});
-  function wrapScope2(root,allow){
-    const have=new Set([...root.querySelectorAll('.term')].map(b=>b.dataset.t));
-    if(allow)RULES.forEach(([,k])=>{if(!allow.includes(k))have.add(k)});
-    (root.matches('p,li')?[root]:root.querySelectorAll('p,li')).forEach(el=>{
-      if(el.closest(SKIP))return;
-      const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
-      nodes.forEach(function go(n){
-        if(n.parentElement.closest(SKIP))return;
-        for(const [pat,key] of RULES){
-          if(have.has(key))continue;
-          const m=new RegExp(pat).exec(n.nodeValue);if(!m)continue;
-          const after=n.splitText(m.index),rest=after.splitText(m[0].length);
-          const b=document.createElement('button');b.type='button';b.className='term';b.dataset.t=key;b.textContent=m[0];
-          after.parentNode.replaceChild(b,after);have.add(key);go(rest);return;
-        }
-      });
-    });
-  }
+  const hdr=document.querySelector('header .lede');if(hdr)wrapTerms(hdr,['elev','azim']);
+  ['#tab-height','#tab-length'].forEach(sel=>{const r=document.querySelector(sel);if(r)wrapTerms(r)});
   const pop=document.createElement('div');pop.className='tpop';pop.hidden=true;pop.setAttribute('role','dialog');
   pop.innerHTML='<div class="tpop-h"></div><div class="tpop-en" lang="en"></div><p class="tpop-b"></p><button type="button" class="tpop-go">계산식과 자세한 설명 →</button>';
   document.body.appendChild(pop);let curKey=null,curBtn=null;
