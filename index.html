@@ -121,6 +121,10 @@ body{word-break:keep-all;overflow-wrap:break-word}
 section>p,.fig>p{margin:0}
 section{gap:12px}
 .tabpanel[hidden],[hidden]{display:none!important}
+.qh{font:500 13px var(--sans);padding:4px 11px;border:1px solid var(--grid);border-radius:999px;background:var(--paper);color:var(--ink);cursor:pointer}
+.qh:hover{border-color:var(--lobe)}
+.qh.on{background:var(--lobe);border-color:var(--lobe);color:#1A1205}
+.qh:focus-visible{outline:2px solid var(--wave2);outline-offset:2px}
 #feedSel label,.btns button,#ionoTime label,#groundSel label,#wireSel label,#feed3 label{font-family:var(--sans)}
 .antbox{border:1.5px solid var(--lobe);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:10px;background:var(--paper)}
 .antbox-h{font-weight:700;font-size:15px;color:var(--lobe)}
@@ -229,7 +233,7 @@ details.adv input[type=range]{margin-top:6px}
 
 <section>
   <div class="eyebrow">높이별 패턴</div>
-  <h2>0.25λ, 0.5λ, 1λ</h2>
+  <h2>0.25λ · 0.5λ · 1λ 높이의 고각 패턴</h2>
   <p>대표적인 세 높이의 패턴입니다. 수평 다이폴을 정면(방위 직각)에서 본 고각 패턴이고, 대지는 완전 도체로 가정했습니다.</p>
   <p>로브 크기는 서로 같은 기준이라, 낮은 안테나일수록 로브 자체가 작아지는 것도 보입니다.</p>
   <div class="fig"><div class="trio" id="trio"></div></div>
@@ -243,8 +247,8 @@ details.adv input[type=range]{margin-top:6px}
   <p>두 파의 경로차는 <code>2h·sin θ</code>이고, 수평편파는 반사 때 위상이 180° 뒤집힙니다. 그래서 경로차가 반 파장의 홀수 배일 때 보강되고, 정수 배 파장일 때 상쇄됩니다.</p>
   <div class="fig">
     <div class="controls">
-      <div class="ctl"><label for="pH">안테나 높이</label><output id="pHo"></output><input type="range" id="pH" min="0.1" max="1.5" step="0.01" value="0.5"></div>
-      <div class="ctl"><label for="pA">관찰 고각 θ</label><output id="pAo"></output><input type="range" id="pA" min="2" max="88" step="1" value="30"></div>
+      <div class="ctl"><label for="pH">지상고 (λ)</label><output id="pHo"></output><input type="range" id="pH" min="0.1" max="1.5" step="0.01" value="0.5"></div>
+      <div class="ctl"><label for="pA">고각 θ</label><output id="pAo"></output><input type="range" id="pA" min="2" max="88" step="1" value="30"></div>
     </div>
     <svg id="phasor" viewBox="0 0 700 330" role="img" aria-label="직접파와 반사파의 경로차와 위상 합성"></svg>
   </div>
@@ -253,16 +257,22 @@ details.adv input[type=range]{margin-top:6px}
 <section>
   <div class="eyebrow">높이는 파장으로 잰다</div>
   <h2>내 안테나 높이로 계산하기</h2>
-  <p>같은 높이라도 밴드를 바꾸면 패턴이 완전히 달라집니다. 기본값은 10.5 m(약 35 ft)입니다. 높이와 밴드를 바꿔 보세요.</p>
+  <p>같은 높이라도 밴드를 바꾸면 패턴이 완전히 달라집니다. 기본값은 이동운용에서 흔히 쓰는 6 m입니다. 높이와 밴드를 바꿔 보세요.</p>
   <div class="fig" style="display:flex;flex-direction:column;gap:14px">
     <div class="controls">
-      <div class="ctl"><label for="mH">지상고 (m)</label><output id="mHo"></output><input type="range" id="mH" min="2" max="40" step="0.5" value="10.5"></div>
+      <div class="ctl"><label for="mH">지상고 (m)</label><output id="mHo"></output><input type="range" id="mH" min="2" max="20" step="0.5" value="6">
+        <div class="bands" id="hQuick" style="margin-top:6px">
+          <button type="button" class="qh" data-h="4">4 m · 휴대 폴</button>
+          <button type="button" class="qh" data-h="6">6 m · 이동 마스트</button>
+          <button type="button" class="qh" data-h="10">10 m · 장대 마스트</button>
+          <button type="button" class="qh" data-h="15">15 m · 고정국 타워</button>
+        </div></div>
       <div class="ctl" style="flex-basis:100%"><span class="clabel">대지 <span class="sub" id="gdesc"></span></span>
         <div class="bands" id="groundSel">
           <input type="radio" name="ground" id="gd0" value="perfect" checked><label for="gd0">완전 도체</label>
           <input type="radio" name="ground" id="gd1" value="sea"><label for="gd1">바닷물</label>
           <input type="radio" name="ground" id="gd2" value="avg"><label for="gd2">보통 대지</label>
-          <input type="radio" name="ground" id="gd3" value="poor"><label for="gd3">건조한 땅 · 도심</label>
+          <input type="radio" name="ground" id="gd3" value="poor"><label for="gd3">건조 토양 · 도심</label>
         </div>
       </div>
       <div class="ctl" style="flex-basis:100%"><span style="font-size:13px;color:var(--muted)">밴드</span><div class="bands" id="bands"></div></div>
@@ -274,9 +284,9 @@ details.adv input[type=range]{margin-top:6px}
       <div>널 (상쇄 각도)<b id="sN"></b><span class="sub" id="sN2"></span></div>
       <div>1홉 도달 거리 (−3 dB 범위)<b id="sD"></b><span class="sub">F2층 300 km 기준</span></div>
     </div>
-    <div style="overflow-x:auto"><table id="tbl"><thead><tr><th>밴드</th><th>주파수</th><th>λ</th><th>h/λ</th><th>주 로브</th><th>성격</th></tr></thead><tbody></tbody></table></div>
+    <div style="overflow-x:auto"><table id="tbl"><thead><tr><th>밴드</th><th>주파수</th><th>λ</th><th>h/λ</th><th>주 로브</th><th>주 용도</th></tr></thead><tbody></tbody></table></div>
     <p class="note">1홉 거리와 NVIS 조건은 바로 아래 그림에서 확인할 수 있습니다.</p>
-    <p class="note">대지 상수: 바닷물 εr 80 · 5 S/m, 보통 대지 εr 13 · 5 mS/m, 건조한 땅 · 도심 εr 5 · 1 mS/m. 실제 대지를 고르면 점선으로 완전 도체일 때의 패턴을 함께 보여 줍니다. 옅게 칠한 부채꼴은 주 로브의 −3 dB 범위입니다.</p>
+    <p class="note">대지 상수: 바닷물 εr 80 · 5 S/m, 보통 대지 εr 13 · 5 mS/m, 건조 토양 · 도심 εr 5 · 1 mS/m. 실제 대지를 고르면 점선으로 완전 도체일 때의 패턴을 함께 보여 줍니다. 옅게 칠한 부채꼴은 주 로브의 −3 dB 범위입니다.</p>
   </div>
 </section>
 
@@ -292,16 +302,16 @@ details.adv input[type=range]{margin-top:6px}
       <div class="ctl" style="flex-basis:100%"><span class="clabel">1. 밴드 <span class="sub" id="iFo"></span></span><div class="bands" id="ionoBands"></div><input type="hidden" id="iF" value="7.1"></div>
       <div class="ctl" style="flex-basis:100%"><span class="clabel">2. 시간대 <span class="sub">· foF2 <output id="iOo"></output> <span id="iOtag">(대표값)</span></span></span>
         <div class="bands" id="ionoTime">
-          <input type="radio" name="itime" id="it9" value="9" checked><label for="it9">낮</label>
-          <input type="radio" name="itime" id="it6" value="6"><label for="it6">해 질 녘</label>
-          <input type="radio" name="itime" id="it4" value="4"><label for="it4">밤</label>
+          <input type="radio" name="itime" id="it9" value="9" checked><label for="it9">주간</label>
+          <input type="radio" name="itime" id="it6" value="6"><label for="it6">일몰 전후</label>
+          <input type="radio" name="itime" id="it4" value="4"><label for="it4">야간</label>
         </div>
         <details class="adv"><summary>foF2 직접 조절</summary><input type="range" id="iO" min="2" max="14" step="0.1" value="9" aria-label="foF2 직접 조절"></details>
       </div>
-      <div class="ctl" style="flex-basis:100%"><label for="iB">3. 발사각</label><output id="iBo"></output><input type="range" id="iB" min="3" max="90" step="1" value="30"></div>
+      <div class="ctl" style="flex-basis:100%"><label for="iB">3. 발사 고각</label><output id="iBo"></output><input type="range" id="iB" min="3" max="90" step="1" value="30"></div>
     </div>
     <div class="btns">
-      <button type="button" id="pSync" class="twoline"><span class="bt">내 안테나 설정 적용</span><span class="bs">위 계산기의 밴드와 주 로브 각도를 가져옵니다</span></button>
+      <button type="button" id="pSync" class="twoline"><span class="bt">계산기 설정 적용</span><span class="bs">위 계산기의 밴드와 주 로브 고각을 가져옵니다</span></button>
     </div>
     <svg id="iono" viewBox="0 0 700 250" role="img" aria-label="지구 곡률과 F2층 높이를 실제 비율로 그린 1홉 경로"></svg>
     <div class="stats five">
@@ -381,12 +391,12 @@ details.adv input[type=range]{margin-top:6px}
     <div class="antbox">
       <div class="antbox-h">내 안테나</div>
       <div class="controls">
-        <div class="ctl" style="flex-basis:100%"><span class="clabel">와이어 기준 <span class="sub">어느 밴드에 맞춰 자른 와이어인가</span></span>
+        <div class="ctl" style="flex-basis:100%"><span class="clabel">공진 기준 밴드 <span class="sub">와이어를 반파장으로 자른 밴드</span></span>
           <div class="bands" id="wireSel">
             <input type="radio" name="wire" id="ws80" value="3.55"><label for="ws80">80m용</label>
             <input type="radio" name="wire" id="ws40" value="7.1" checked><label for="ws40">40m용</label>
             <input type="radio" name="wire" id="ws20" value="14.2"><label for="ws20">20m용</label>
-            <input type="radio" name="wire" id="wsL" value="0"><label for="wsL">λ로 직접</label>
+            <input type="radio" name="wire" id="wsL" value="0"><label for="wsL">이론 모드 (λ 단위)</label>
           </div>
         </div>
         <div class="ctl" style="flex-basis:100%"><span class="clabel">운용 밴드 <span class="sub">높이 탭 계산기와 연동</span></span><div class="bands" id="opSel"></div></div>
@@ -404,17 +414,10 @@ details.adv input[type=range]{margin-top:6px}
         <div class="bands" id="lenSel"></div>
         <details class="adv"><summary>길이 직접 조절</summary><input type="range" id="wL" min="0.5" max="3" step="0.25" value="1" aria-label="와이어 길이 직접 조절"></details>
       </div>
-      <div class="ctl"><label for="wE">보는 고각 <span class="sub" id="wEsrc"></span></label><output id="wEo"></output><input type="range" id="wE" min="0" max="90" step="1" value="15"></div>
-      <div class="ctl"><label for="wT">진행파 성분 (방사 감쇠)</label><output id="wTo"></output><input type="range" id="wT" min="0" max="50" step="5" value="0"><span class="sub">끝에서 돌아오는 파가 얼마나 약해지는가 · 실제 와이어는 대략 10~30%</span></div>
+      <div class="ctl"><label for="wE">단면 고각 <span class="sub" id="wEsrc"></span></label><output id="wEo"></output><input type="range" id="wE" min="0" max="90" step="1" value="15"></div>
+      <div class="ctl"><label for="wT">진행파 성분</label><output id="wTo"></output><input type="range" id="wT" min="0" max="50" step="5" value="0"><span class="sub">끝단 반사파의 감쇠 비율 · 실제 와이어 약 10~30%</span></div>
     </div>
-    <div class="btns"><button type="button" id="elSync" class="twoline"><span class="bt">자동 고각으로 되돌리기</span><span class="bs" id="elSyncSub">높이 탭 계산기의 밴드·지상고·대지로 구한 주 로브 고각을 "보는 고각"에 넣습니다</span></button></div>
-    <div class="btns" aria-label="EFHW 프리셋">
-      <span class="clabel" style="align-self:center">40m용 EFHW를</span>
-      <button type="button" data-l="0.5">40m에서 (0.5λ)</button>
-      <button type="button" data-l="1">20m에서 (1λ)</button>
-      <button type="button" data-l="1.5">15m에서 (1.5λ)</button>
-      <button type="button" data-l="2">10m에서 (2λ)</button>
-    </div>
+    <div class="btns"><button type="button" id="elSync" class="twoline"><span class="bt">자동 고각 복원</span><span class="bs" id="elSyncSub">높이 탭 계산기의 밴드·지상고·대지로 구한 주 로브 고각을 단면 고각으로 설정합니다</span></button></div>
     <div class="antsum" data-sum></div>
     <svg id="curSvg" viewBox="0 0 680 170" role="img" aria-label="와이어 위 전류 분포와 위상"></svg>
     <div class="azgrid">
@@ -422,10 +425,10 @@ details.adv input[type=range]{margin-top:6px}
       <div class="stats stack">
         <div>지향성 (자유공간)<b id="lD"></b><span id="lD2" class="sub"></span></div>
         <div>가장 센 방향<b id="lMax"></b><span class="sub">와이어 축 기준 (0° = 오른쪽 끝)</span></div>
-        <div>최대 대비 −3 dB 이내 방향<b id="lDir"></b><span class="sub" id="lDir2"></span></div>
+        <div>−3 dB 방위 비율<b id="lDir"></b><span class="sub" id="lDir2"></span></div>
         <div>정면(90°) 세기<b id="lBs"></b></div>
-        <div>급전점<b id="lFeed"></b><span id="lFeed2" class="sub"></span></div>
-        <div>먼 끝 쪽 대 급전 쪽<b id="lFB"></b><span class="sub" id="lFBs"></span></div>
+        <div>급전점 임피던스<b id="lFeed"></b><span id="lFeed2" class="sub"></span></div>
+        <div>전후비 (먼 끝 / 급전점)<b id="lFB"></b><span class="sub" id="lFBs"></span></div>
       </div>
     </div>
     <p class="note">방위 패턴은 위에서 내려다본 그림으로, 선택한 고각에서 자른 단면입니다. 대지 위에서는 고각 0°의 신호가 0이라 기본값을 15°로 두었습니다. 고각이 높을수록 방위 패턴이 둥글어져서 방향의 영향이 줄어듭니다. 그림 크기는 단면마다 가장 센 방향을 기준으로 맞췄습니다.</p>
@@ -460,7 +463,7 @@ details.adv input[type=range]{margin-top:6px}
   <div class="fig" style="display:flex;flex-direction:column;gap:14px">
     <div class="antsum" data-sum></div>
     <div class="controls">
-      <div class="ctl"><label for="g3H">지상고</label><output id="g3Ho"></output><input type="range" id="g3H" min="0.1" max="2" step="0.05" value="0.5"></div>
+      <div class="ctl"><label for="g3H">지상고 (λ)</label><output id="g3Ho"></output><input type="range" id="g3H" min="0.1" max="2" step="0.05" value="0.5"></div>
       <div class="ctl"><span class="clabel">보기</span>
         <div class="bands">
           <input type="radio" name="g3m" id="g3G" value="ground" checked><label for="g3G">대지 반사 포함</label>
@@ -469,7 +472,7 @@ details.adv input[type=range]{margin-top:6px}
       </div>
     </div>
     <div class="btns">
-      <button type="button" id="g3Sync" class="twoline"><span class="bt">내 안테나 적용</span><span class="bs">위 "내 안테나"의 와이어·운용 밴드와 높이 탭의 지상고·대지를 씁니다</span></button>
+      <button type="button" id="g3Sync" class="twoline"><span class="bt">내 안테나 설정 적용</span><span class="bs">"내 안테나"의 공진 기준·운용 밴드와 높이 탭의 지상고·대지를 적용합니다</span></button>
       <button type="button" id="g3Reset" class="twoline"><span class="bt">시점 초기화</span><span class="bs">처음 보던 각도로 되돌립니다</span></button>
     </div>
     <div class="controls compact">
@@ -555,6 +558,18 @@ details.adv input[type=range]{margin-top:6px}
       <p class="gshort">가장 센 방향의 세기가 모든 방향으로 고르게 퍼질 때보다 몇 배인지를 나타냅니다. dBi는 등방성 안테나 대비 데시벨입니다.</p>
       <div class="formula">D = 4π × (최대 방사 세기) ÷ (전체 방사 전력)<br>D (dBi) = 10 · log₁₀ D</div>
       <p class="gex">반파장 다이폴은 약 2.15 dBi입니다. 손실이 없다고 볼 때의 값이라 이득과 같습니다.</p>
+    </div>
+    <div class="gl" id="g-fb">
+      <h3>전후비</h3>
+      <p class="gen" lang="en">Front-to-back ratio</p>
+      <p class="gshort">앞쪽 최대 세기와 뒤쪽 최대 세기의 비입니다. 이 페이지에서는 와이어 먼 끝 쪽(0°~90°)과 급전점 쪽(90°~180°)을 비교합니다.</p>
+      <div class="formula">전후비 (dB) = 20 · log₁₀(E<sub>앞</sub> ÷ E<sub>뒤</sub>)</div>
+    </div>
+    <div class="gl" id="g-omni">
+      <h3>무지향 · −3 dB 방위 비율</h3>
+      <p class="gen" lang="en">Omnidirectional · Half-power azimuth coverage</p>
+      <p class="gshort">모든 방위로 고르게 방사하면 무지향이라고 합니다. −3 dB 방위 비율은 최대 세기의 절반 이상이 나가는 방위가 전체의 몇 %인지를 나타냅니다.</p>
+      <p class="gex">이 페이지 기준: 75% 이상 무지향에 가까움, 40~75% 지향성 있음, 40% 미만 지향성 강함.</p>
     </div>
     <div class="gl" id="g-pol">
       <h3>편파</h3>
@@ -690,6 +705,12 @@ details.adv input[type=range]{margin-top:6px}
       <div class="formula">MUF = foF2 ÷ cos i　(정할 법칙 · secant law)<br>sin i = R · cos β ÷ (R + h)</div>
       <p class="gex">i는 전리층에서의 입사각, β는 발사각, R = 6,371 km, h = 300 km입니다. 지구 곡률 때문에 수평으로 쏘아도 foF2의 약 3.4배가 한계입니다.</p>
     </div>
+    <div class="gl" id="g-reflect">
+      <h3>반사 · 투과</h3>
+      <p class="gen" lang="en">Reflection · Penetration</p>
+      <p class="gshort">전리층에서 굴절돼 지상으로 돌아오면 반사, 굴절이 부족해 전리층을 뚫고 우주로 나가면 투과입니다.</p>
+      <div class="formula">반사 조건: f ≤ MUF(발사 고각)</div>
+    </div>
     <div class="gl" id="g-muf3000">
       <h3>MUF(3000)</h3>
       <p class="gen" lang="en">MUF for a 3,000 km path · M(3000) factor</p>
@@ -755,7 +776,7 @@ const vPat=t=>{const c=Math.cos(t);return c<1e-4?0:Math.abs(Math.cos(Math.PI/2*M
 const mainAngle=H=>H<=0.25?90:deg(Math.asin(1/(4*H)));
 function nulls(H){const n=[];for(let k=1;k/(2*H)<=1+1e-9;k++)n.push(deg(Math.asin(Math.min(1,k/(2*H)))));return n}
 /* 실제 대지: 수평편파(TE) 반사 계수. εc = εr − j·60σλ */
-const GROUNDS={perfect:{n:'완전 도체'},sea:{n:'바닷물',er:80,sg:5},avg:{n:'보통 대지',er:13,sg:0.005},poor:{n:'건조한 땅 · 도심',er:5,sg:0.001}};
+const GROUNDS={perfect:{n:'완전 도체'},sea:{n:'바닷물',er:80,sg:5},avg:{n:'보통 대지',er:13,sg:0.005},poor:{n:'건조 토양 · 도심',er:5,sg:0.001}};
 let groundSel='perfect';
 function gammaH(psi,lam,g){const sp=Math.sin(psi),c2=Math.cos(psi)**2,zr=g.er-c2,zi=-60*g.sg*lam,m=Math.hypot(zr,zi),
   sr=Math.sqrt((m+zr)/2),si=(zi<0?-1:1)*Math.sqrt(Math.max(0,(m-zr)/2)),nr=sp-sr,ni=-si,dr=sp+sr,di=si,dd=dr*dr+di*di;
@@ -866,16 +887,16 @@ const BANDS=[['160m',1.85],['80m',3.55],['40m',7.1],['30m',10.12],['20m',14.2],[
 const bandsEl=document.getElementById('bands');let sel=4;
 BANDS.forEach(([n],i)=>{const id='b'+i;const inp=document.createElement('input');inp.type='radio';inp.name='band';inp.id=id;inp.checked=i===sel;inp.addEventListener('change',()=>{sel=i;update()});const l=document.createElement('label');l.htmlFor=id;l.textContent=n;bandsEl.append(inp,l)});
 const mH=document.getElementById('mH'),big=document.getElementById('big');
-function kind(H,a){a=a===undefined?mainAngle(H):a;return(a>=60?'NVIS · 근거리':a>=25?'중거리':'DX')+(H<0.15?' (효율 손해)':'')}
+function kind(H,a){a=a===undefined?mainAngle(H):a;return(a>=60?'근거리 · NVIS':a>=25?'중거리':'DX')+(H<0.15?' (효율 손해)':'')}
 function update(){
-  const m=+mH.value;document.getElementById('mHo').textContent=m.toFixed(1)+' m ('+(m*3.281).toFixed(0)+' ft)';
+  const m=+mH.value;document.querySelectorAll('.qh').forEach(b=>b.classList.toggle('on',+b.dataset.h===m));document.getElementById('mHo').textContent=m.toFixed(1)+' m ('+(m*3.281).toFixed(0)+' ft)';
   const f=BANDS[sel][1],lam=299.79/f,H=m/lam;
   const real=groundSel!=='perfect',pat=patFor(H,f),A=analyze(pat);
   dipoleScene(big,H,{W:680,Ht:340,pxPerL:150,maxPost:220,R:170,guides:true,marks:true,span:150,pat,ana:A,ref:real?(t=>hPat(H,t)):null});
   const rel=20*Math.log10(A.max);
   document.getElementById('sH').textContent=H.toFixed(2)+' λ';
   document.getElementById('sA').textContent=A.main.toFixed(1)+'°';
-  document.getElementById('sA2').textContent='−3 dB 범위 '+A.lo.toFixed(0)+'°~'+A.hi.toFixed(0)+'°'+(rel<-0.05?' · 이상적 최대 대비 '+rel.toFixed(1).replace('-','−')+' dB':'');
+  document.getElementById('sA2').textContent='−3 dB 범위 '+A.lo.toFixed(0)+'°~'+A.hi.toFixed(0)+'°'+(rel<-0.05?(real?' · 완전 도체 대비 ':' · 0.25λ 이상 대비 ')+rel.toFixed(1).replace('-','−')+' dB':'');
   document.getElementById('sN').textContent=A.mins.length?A.mins.map(m=>m[0].toFixed(0)+'°'+(real&&m[1]>-40?' ('+m[1].toFixed(0)+' dB)':'')).join(', '):'수평선만';
   document.getElementById('sN2').textContent=real&&A.mins.length?'실제 대지에서는 널이 완전히 0이 되지 않습니다':'';
   const dLo=Math.round(hopKm(Math.max(A.lo,0.5))).toLocaleString();
@@ -886,6 +907,7 @@ function update(){
   if(window.__lenSync)window.__lenSync();
 }
 mH.addEventListener('input',update);
+document.querySelectorAll('.qh').forEach(b=>b.addEventListener('click',()=>{mH.value=b.dataset.h;update()}));
 document.querySelectorAll('input[name=ground]').forEach(r=>r.addEventListener('change',()=>{groundSel=r.value;const g=GROUNDS[groundSel];document.getElementById('gdesc').textContent=g.er?'· εr '+g.er+', σ '+(g.sg>=1?g.sg+' S/m':(g.sg*1000)+' mS/m'):'· 반사 손실 없음 (이론값)';update()}));
 document.getElementById('gdesc').textContent='· 반사 손실 없음 (이론값)';
 update();
@@ -935,7 +957,7 @@ const vert=document.getElementById('vert');
     svg.innerHTML='';
     E('circle',{cx,cy,r:Rp+hp,class:'layerband'},svg);E('circle',{cx,cy,r:Rp+hp,class:'layer'},svg);
     const I=dI(fo);if(I>0.05){E('circle',{cx,cy,r:Rp+90/RE*Rp,fill:'none',stroke:'var(--null)','stroke-opacity':(0.08+0.22*I).toFixed(2),'stroke-width':8},svg);
-      const dp=P(Rp+90/RE*Rp,82);T('D층 · 낮에 흡수',{x:dp[0],y:dp[1]-8,class:'gtxt','text-anchor':'middle',style:'fill:var(--null)'},svg)}
+      const dp=P(Rp+90/RE*Rp,82);T('D층 · 주간 흡수',{x:dp[0],y:dp[1]-8,class:'gtxt','text-anchor':'middle',style:'fill:var(--null)'},svg)}
     E('circle',{cx,cy,r:Rp,class:'earth'},svg);
     const lp=P(Rp+hp,76);T('F2층 300 km',{x:lp[0]-4,y:lp[1]-18,class:'lblm','text-anchor':'end',fill:'var(--wave2)'},svg);
     for(let d=500;d<=3500;d+=500){const a=th0-deg(d/RE),q=P(Rp,a),q2=P(Rp-8,a);E('line',{x1:q[0],y1:q[1],x2:q2[0],y2:q2[1],stroke:'var(--paper)','stroke-width':1},svg);
@@ -950,18 +972,18 @@ const vert=document.getElementById('vert');
     for(let x=5;x<=90;x+=5)ray(x);
     const ok=ray(b,'ray',3.5);
     const t=P(Rp,th0);E('circle',{cx:t[0],cy:t[1],r:4,fill:'var(--ink)'},svg);T('TX',{x:t[0]-8,y:t[1]+4,class:'lbl','text-anchor':'end'},svg);
-    E('line',{x1:470,y1:14,x2:494,y2:14,class:'ray','stroke-width':2},svg);T('되돌아옴',{x:500,y:18,class:'lblm'},svg);
-    E('line',{x1:570,y1:14,x2:594,y2:14,stroke:'var(--muted)','stroke-dasharray':'3 3','stroke-width':1.5},svg);T('뚫고 나감',{x:600,y:18,class:'lblm'},svg);
+    E('line',{x1:470,y1:14,x2:494,y2:14,class:'ray','stroke-width':2},svg);T('반사',{x:500,y:18,class:'lblm'},svg);
+    E('line',{x1:570,y1:14,x2:594,y2:14,stroke:'var(--muted)','stroke-dasharray':'3 3','stroke-width':1.5},svg);T('투과',{x:600,y:18,class:'lblm'},svg);
     if(I>0.05)T('흐린 선일수록 D층 흡수가 큽니다',{x:470,y:36,class:'gtxt'},svg);
     document.getElementById('hD').textContent=Math.round(2*RE*alpha(b)).toLocaleString()+' km';
     document.getElementById('hM').textContent=muf(fo,b).toFixed(1)+' MHz';
     const A=absorb(f,b,fo),A90=absorb(f,90,fo),lv=x=>x<10?'작음':x<30?'큼':'매우 큼';
     const r=document.getElementById('hR');
-    if(!ok){r.textContent='뚫고 나감';r.className='bad'}
-    else if(A>30){r.textContent='흡수로 소멸';r.className='bad'}
-    else{r.textContent=A>10?'되돌아옴 (약함)':'되돌아옴';r.className='ok'}
+    if(!ok){r.textContent='투과';r.className='bad'}
+    else if(A>30){r.textContent='D층 흡수 소멸';r.className='bad'}
+    else{r.textContent=A>10?'반사 (감쇠)':'반사';r.className='ok'}
     document.getElementById('hA').textContent=A.toFixed(0)+' dB';
-    document.getElementById('hA2').textContent=lv(A)+(I<=0.05?' · 밤에는 D층이 거의 없음':'');
+    document.getElementById('hA2').textContent=lv(A)+(I<=0.05?' · 야간 D층 소멸':'');
     document.getElementById('hS').textContent=f<=fo?(A90>30?'없음 · 단, 흡수로 NVIS도 약함':'없음 · NVIS 가능'):bmax<0?'전 각도 통과':'0 ~ '+Math.round(2*RE*alpha(Math.max(bmax,0.01))).toLocaleString()+' km';
   }
   const IB=[['160m',1.85],['80m',3.55],['60m',5.35],['40m',7.1],['30m',10.12],['20m',14.2],['17m',18.12],['15m',21.2],['12m',24.94],['10m',28.5]];
@@ -1083,11 +1105,11 @@ const vert=document.getElementById('vert');
   }
 
   function feedText(){
-    if(st.feed==='end')return['높은 임피던스','전류 최소점 · 수천 Ω, 49:1 언언으로 정합'];
+    if(st.feed==='end')return['높음','전류 최소점 · 수천 Ω, 49:1 언언으로 정합'];
     const i=Math.abs(Math.sin(Math.PI*st.L));
-    if(i>0.7)return['낮은 임피던스','전류 최대점 근처 · 50~120 Ω대'];
-    if(i<0.3)return['높은 임피던스','전류 최소점 근처 · 수천 Ω, 튜너·래더선 필요'];
-    return['중간 임피던스','전류 중간 · 정합 장치 필요'];
+    if(i>0.7)return['낮음','전류 최대점 근처 · 50~120 Ω대'];
+    if(i<0.3)return['높음','전류 최소점 근처 · 수천 Ω, 튜너·래더선 필요'];
+    return['중간','전류 중간 · 정합 장치 필요'];
   }
 
   function updateMain(){
@@ -1096,7 +1118,7 @@ const vert=document.getElementById('vert');
     document.getElementById('wLex').textContent=st.wireF?'· '+wireName()+' 와이어 약 '+(299.79/st.wireF/2).toFixed(1)+' m':'· 20m 밴드(14.2 MHz)라면 와이어 약 '+(st.L*299.79/14.2).toFixed(1)+' m';
     document.getElementById('wEo').textContent=st.el+'°';
     {const b=document.getElementById('elSync'),auto=st.wireF&&!st.elManual;b.disabled=!!auto;
-      document.getElementById('elSyncSub').textContent=auto?'지금 자동으로 주 로브 고각을 따르는 중입니다':'높이 탭 계산기의 밴드·지상고·대지로 구한 주 로브 고각을 "보는 고각"에 넣습니다'}
+      document.getElementById('elSyncSub').textContent=auto?'현재 주 로브 고각에 자동 연동 중입니다':'높이 탭 계산기의 밴드·지상고·대지로 구한 주 로브 고각을 단면 고각으로 설정합니다'}
     document.getElementById(st.feed==='end'?'f3e':'f3c').checked=true;
     renderSummary();
     const P=build(st.L,st.feed,st.tw);drawCurrent();
@@ -1108,12 +1130,12 @@ const vert=document.getElementById('vert');
     document.getElementById('lMax').textContent=bi+'°';
     let mn=1,cov=0;for(let a=0;a<360;a++){mn=Math.min(mn,r[a]);if(r[a]>=Math.SQRT1_2)cov++}
     const pc=Math.round(cov/3.6),dr=-20*Math.log10(Math.max(mn,1e-6));
-    document.getElementById('lDir').textContent='전체 방향의 '+pc+'%';
-    document.getElementById('lDir2').textContent=(pc>=75?'거의 둥근 모양 · 방향 영향 작음':pc>=40?'방향 영향 있음':'방향 영향 큼 · 와이어 방향이 중요')+' · 가장 약한 방향 '+(dr>=30?'−30 dB 이하':dr<0.05?'0 dB':'−'+dr.toFixed(1)+' dB');
+    document.getElementById('lDir').textContent=pc+'%';
+    document.getElementById('lDir2').textContent=(pc>=75?'무지향에 가까움':pc>=40?'지향성 있음':'지향성 강함 · 설치 방향 중요')+' · 최저 방위 '+(dr>=30?'−30 dB 이하':dr<0.05?'0 dB':'−'+dr.toFixed(1)+' dB');
     const bs=r[90];document.getElementById('lBs').textContent=bs<0.01?'널 (−40 dB 이하)':(20*Math.log10(bs)).toFixed(1)+' dB';
     const fb=20*Math.log10(fr/Math.max(bk,1e-6)),fbEl=document.getElementById('lFB'),fbSub=document.getElementById('lFBs');
-    if(st.feed==='center'){fbEl.textContent='대칭';fbSub.textContent='중앙 급전은 양쪽 다리가 같아 항상 0 dB'}
-    else{fbEl.textContent=(Math.abs(fb)<0.05?'0.0':(fb>0?'+':'')+fb.toFixed(1))+' dB';fbSub.textContent='0°~90° 최대 대 90°~180° 최대'}
+    if(st.feed==='center'){fbEl.textContent='대칭';fbSub.textContent='중앙 급전은 좌우 대칭이므로 항상 0 dB'}
+    else{fbEl.textContent=(Math.abs(fb)<0.05?'0.0':(fb>0?'+':'')+fb.toFixed(1))+' dB';fbSub.textContent='0°~90° 최대 ÷ 90°~180° 최대'}
     document.getElementById('wTo').textContent=Math.round(st.tw*100)+'%';
     const [a,b]=feedText();document.getElementById('lFeed').textContent=a;document.getElementById('lFeed2').textContent=b;
     drawSmall();draw3d();
@@ -1215,8 +1237,7 @@ const vert=document.getElementById('vert');
     st.el=Math.max(0,Math.min(90,a));wE.value=st.el;
     document.getElementById('wEsrc').textContent='· '+n+' · '+m.toFixed(1)+' m · '+GROUNDS[groundSel].n+'의 주 로브';updateMain()};
   const wT=document.getElementById('wT');wT.addEventListener('input',()=>{st.tw=+wT.value/100;updateMain()});
-  document.querySelectorAll('[data-l]').forEach(b=>b.addEventListener('click',()=>{const L=+b.dataset.l,bi={0.5:2,1:4,1.5:6,2:8}[L];
-    st.wireF=7.1;document.getElementById('ws40').checked=true;setFeed('end');setOp(bi)}));
+
   const g3H=document.getElementById('g3H');
   g3H.addEventListener('input',()=>{toLambda();st.H=+g3H.value;renderSummary();req()});
   document.querySelectorAll('input[name=g3m]').forEach(i=>i.addEventListener('change',()=>{st.ground=i.value==='ground';if(st.ground&&st.pitch<-5)st.pitch=22;req()}));
@@ -1238,9 +1259,9 @@ const vert=document.getElementById('vert');
     const [n,f]=BANDS[sel],m=+mH.value,lam=299.79/f;document.getElementById('op'+sel).checked=true;
     if(st.wireF){st.L=f/(2*st.wireF);wL.value=Math.min(3,st.L);st.H=m/lam;g3H.value=Math.min(2,Math.max(0.1,st.H))}
     if(st.wireF&&!st.elManual){st.el=Math.max(0,Math.min(90,Math.round(anaFor(m/lam,f).main)));wE.value=st.el;
-      document.getElementById('wEsrc').textContent='· 주 로브 고각 (자동)'}
-    document.getElementById('antHint').innerHTML=st.wireF?'지상고 <b>'+m.toFixed(1)+' m</b> · 대지 <b>'+GROUNDS[groundSel].n+'</b>는 높이 탭 계산기 값을 씁니다. <a href="#height" class="gohe">높이 탭에서 바꾸기</a>'
-      :'λ로 직접 정하는 중입니다. 와이어 길이와 지상고를 아래에서 파장 단위로 바꿀 수 있고, 밴드와는 연결되지 않습니다.';
+      document.getElementById('wEsrc').textContent='· 주 로브 고각 자동 연동'}
+    document.getElementById('antHint').innerHTML=st.wireF?'지상고 <b>'+m.toFixed(1)+' m</b> · 대지 <b>'+GROUNDS[groundSel].n+'</b>는 높이 탭 계산기 값을 씁니다. <a href="#height" class="gohe">높이 탭에서 변경</a>'
+      :'이론 모드: 밴드와 관계없이 와이어 길이와 지상고를 파장 단위로 직접 설정합니다.';
     updateMain();req();
   }
   window.__lenSync=sync;
@@ -1249,9 +1270,9 @@ const vert=document.getElementById('vert');
   function renderSummary(){
     const [n,f]=BANDS[sel],res=Math.abs(st.L*2-Math.round(st.L*2))<0.03;
     const feed=st.feed==='end'?'끝 급전 (EFHW)':'중앙 급전 (다이폴)';
-    let l1=feed+' · 와이어 '+fmtL(st.L)+'λ · 지상고 '+st.H.toFixed(2)+'λ · '+GROUNDS[groundSel].n+' · 보는 고각 '+st.el+'°';
+    let l1=feed+' · 와이어 '+fmtL(st.L)+'λ · 지상고 '+st.H.toFixed(2)+'λ · '+GROUNDS[groundSel].n+' · 단면 고각 '+st.el+'°';
     let l2=st.wireF?wireName()+' 와이어(약 '+(299.79/st.wireF/2).toFixed(1)+' m)를 '+n+' 밴드('+f.toFixed(2)+' MHz)에서 · 지상고 '+(+mH.value).toFixed(1)+' m'
-      :'λ 단위로 직접 설정 중 · 실제 밴드와 연결하지 않음';
+      :'이론 모드 (λ 단위) · 실제 밴드와 연동하지 않음';
     let warn=st.wireF&&st.feed==='end'&&!res?'이 밴드에서는 끝 급전 와이어가 공진하지 않습니다 (와이어 '+fmtL(st.L)+'λ). 실제로는 튜너 없이 정합이 어렵습니다.':'';
     document.querySelectorAll('[data-sum]').forEach(d=>{d.innerHTML='<div class="as1"></div><div class="as2"></div>'+(warn?'<div class="as3"></div>':'');
       d.querySelector('.as1').textContent=l1;d.querySelector('.as2').textContent=l2;if(warn)d.querySelector('.as3').textContent=warn});
